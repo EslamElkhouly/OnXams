@@ -1,0 +1,199 @@
+﻿@model OnlineExamPlatform.ViewModels.ExaminerAndExamInformation
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+
+            <div class="page-wrapper">
+                <div class="page-body">
+
+                    @using (@Html.BeginForm("Index", "Examiner", FormMethod.Get))
+                    {
+                        <div class="row">
+                            <div class="col-md-12 col-xl-7">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="card-header-text"> Personal Information</div>
+                                    </div>
+
+
+                                    <div class="form-group text-center">
+                                        <a href="~/images/DefaultBoy.png">
+                                            <img src="~/images/DefaultBoy.png" class="image-profile" alt="Personal Image" />
+                                        </a>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-6 b-r-default">
+                                                @Html.Label("Email")
+                                            </div>
+                                            <div class="col-6 pull-right ">
+                                                <text class="font-weight-bold">@Model.Email</text>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-6 b-r-default">
+                                                @Html.Label("Title")
+                                            </div>
+                                            <div class="col-6 pull-right ">
+                                                <text class="font-weight-bold">@Model.Title</text>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-6 b-r-default">
+                                                @Html.Label("Full Name")
+                                            </div>
+                                            <div class="col-6 pull-right ">
+                                                <text class="font-weight-bold">@Model.FullName</text>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-6 b-r-default">
+                                                @Html.Label("Gender")
+                                            </div>
+                                            <div class="col-6 pull-right ">
+                                                <text class="font-weight-bold">@Model.Gender</text>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-6 b-r-default">
+                                                @Html.Label("Birth Date")
+                                            </div>
+                                            <div class="col-6 pull-right ">
+                                                <text type="Date"  class="font-weight-bold" >@Model.BirthDate.ToLongDateString()</text>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6 b-r-default">
+                                                @Html.Label("Phone Number")
+                                            </div>
+                                            <div class="col-6 pull-right ">
+                                                <text class="font-weight-bold">@Model.PhoneNumber</text>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                            @*Start of Exam Card*@
+                            <div class="col-md-12 col-xl-5">
+                                
+                                
+                                
+
+                                <div class="card fb-card">
+                                    <div class="card-header text-center">
+                                       
+                                        <div class="d-inline-block ">
+                                            <h1>Next Exam</h1>
+                                        </div>
+                                    </div>
+                                    <div class="card-block">
+                                        <!--Text-center here-->
+                                        <div class="row ">
+                                            
+                                            
+                                            @*هنا هنعدل الجدول*@
+                     
+                                            <div class="table-responsive ">
+                                                <table class="table table-striped ">
+                                                    <tr>
+                                                        <td>
+                                                            <label>Course Name</label>
+                                                        </td>
+                                                        <td>@Model.CourseName</td>
+                                                    </tr>
+
+
+                                                    <tr>
+                                                        <td>
+                                                            <label>Exam Name</label>
+                                                        </td>
+                                                        <td>@Model.ExamName</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <label>Start Date</label>
+                                                        </td>
+                                                        @if (@Model.StartDate.HasValue)
+                                                        {
+                                                            <td>@Model.StartDate.Value.ToLongDateString()</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>@Model.StartDate</td>
+                                                        }
+
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <label>Start Time</label>
+                                                        </td>
+                                                        @if (@Model.StartTime.HasValue)
+                                                        {
+                                                            <td><text class="time">@Model.StartTime</text></td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>@Model.StartTime</td>
+                                                        }
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <label>Duration</label>
+                                                        </td>
+                                                        <td>@Model.Duration </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <label>Number of Groups</label>
+                                                        </td>
+                                                        <td>@Model.NoOfGroups </td>
+                                                    </tr>
+
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                                
+                                
+                                
+
+                            </div>
+
+                            @*End Of The Exam Card*@
+                        </div>
+
+                    }
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    </div>

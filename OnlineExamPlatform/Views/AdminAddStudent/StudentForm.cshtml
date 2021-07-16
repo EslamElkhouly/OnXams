@@ -1,0 +1,156 @@
+﻿@model OnlineExamPlatform.ViewModels.NewStudentViewModel
+
+
+
+@{
+    ViewBag.Title = "New Student";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-block">
+                                    @using (@Html.BeginForm("SaveStudent", "AdminAddStudent"))
+                                    {
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.StudentData.FirstName)
+                                            @Html.TextBoxFor(m => m.StudentData.FirstName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.StudentData.FirstName)
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.StudentData.MiddleName)
+                                            @Html.TextBoxFor(m => m.StudentData.MiddleName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.StudentData.MiddleName)
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.StudentData.LastName)
+                                            @Html.TextBoxFor(m => m.StudentData.LastName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.StudentData.LastName)
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.EmailAddress)
+                                            @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", type = "Email" })
+                                            @Html.ValidationMessageFor(m => m.EmailAddress)
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.Password)
+                                            @Html.TextBoxFor(m => m.Password, new { @class = "form-control", type = "password" })
+                                            @Html.ValidationMessageFor(m => m.Password)
+                                        </div>
+
+
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.StudentData.BirthDate)
+                                            @Html.TextBoxFor(m => m.StudentData.BirthDate, "{0:yyyy-MM-dd}", new { type = "date", @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.StudentData.BirthDate)
+                                        </div>
+                                        <div class="form-group ">
+                                            <div class="checkbox">
+                                                <label>
+
+
+                                                    @Html.CheckBoxFor(m => m.IsStudentPassed, new
+                                                    {
+                                                        @class = "checkbox",
+                                                        @data_toggle = "toggle",
+                                                        data_on = "Passed",
+                                                        data_off = "Failed",
+
+                                                        data_onstyle = "success",
+                                                        data_offstyle = "danger",
+                                                        @checked = "checked",
+                                                        data_width="100" ,
+                                                        data_height="50"
+
+                                                    })
+                                                    click to change state?
+                                                </label>
+
+                                            </div>
+
+                                        </div>
+                                        @*<div class="form-group">
+                                                @Html.LabelFor(m => m.StudentData.SuccessStatus)
+                                                @Html.TextBoxFor(m => m.StudentData.SuccessStatus, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.StudentData.SuccessStatus)
+
+                                            </div>*@
+                                        <div class="form-group">
+
+                                            @Html.LabelFor(m => m.StudentData.GenderID)
+                                            @Html.DropDownListFor(m => m.StudentData.GenderID,
+                                                new SelectList(Model.Gender, "GenderId", "GenderName")
+                                                , "Select Gender",
+                                                new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.StudentData.GenderID)
+
+                                        </div>
+
+                                        <div class="form-group">
+
+                                            @Html.LabelFor(m => m.StudentData.GradeYearID)
+                                            @Html.DropDownListFor(m => m.StudentData.GradeYearID,
+                                                 new SelectList(Model.GradeYear, "GradeYearId", "GradeYearName")
+                                                , "Select Grade Year",
+                                                new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.StudentData.GradeYearID)
+
+                                        </div>
+
+                                        <div class="form-group">
+
+                                            @Html.LabelFor(m => m.StudentData.DepartmentId)
+                                            @Html.DropDownListFor(m => m.StudentData.DepartmentId,
+                                                new SelectList(Model.Department, "DepartmentId", "DepartmentName")
+                                                , "Select Department",
+                                                new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.StudentData.DepartmentId)
+
+                                        </div>
+
+
+
+
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.StudentData.PhoneNumber)
+                                            @Html.TextBoxFor(m => m.StudentData.PhoneNumber, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.StudentData.PhoneNumber)
+                                        </div>
+
+                                        @Html.HiddenFor(m => m.StudentData.StudentID)
+                                        @Html.Hidden("userEmailAddress", Model.EmailAddress)
+                                        @Html.HiddenFor(m => m.StudentData.StudentGUID)
+                                        @Html.AntiForgeryToken()
+                                        <button class="btn btn-primary" type="submit">Save</button>
+                                        @Html.ActionLink("Cancel", "Index", "AdminAddStudent", new { @class = "pull-right btn btn-danger" })
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*Client Side Validation*@
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval");
+}

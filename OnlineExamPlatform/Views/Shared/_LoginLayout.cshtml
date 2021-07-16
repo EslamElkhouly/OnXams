@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>@ViewBag.Title -Online Exam Platform</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="Online Exam">
+    <meta name="keywords" content=" Exam , online Exam, Platfoem , Student, Admin,Examiner,doctor, Instructor, Proctor, iOS, Android, apple, Desktop,laptop">
+    @*Start Of css*@
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+
+
+
+<body class="fix-menu">
+    <section class="login p-fixed d-flex text-center common-img-bg">
+        <!-- Container-fluid starts -->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <!-- Authentication card start -->
+                    @RenderBody()
+
+                    <!-- Authentication card end -->
+                </div>
+                <!-- end of col-sm-12 -->
+            </div>
+            <!-- end of row -->
+        </div>
+        <!-- end of container-fluid -->
+    </section>
+    @*Stat Of Javascript*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/js")
+    @*to enable client side validation*@
+    @RenderSection("scripts", false);
+</body>
+</html>

@@ -1,0 +1,34 @@
+﻿.website-text
+{
+    color:#0fb4ee;
+}
+.image-profile
+{
+    width:300px;
+    height:200px
+}
+
+ .move{
+     padding:30px 40px;
+ }
+h1
+{
+    color:white;
+}
+.validation-summary-errors{
+    color: Red;
+}
+.field-validation-error {
+    color: Red;
+
+}
+.input-validation-error {
+    border-color: Red;
+}
+.modal-red-header{
+    background-color:red;
+    color: white;
+}
+.img-logo {
+    mix-blend-mode: multiply;
+}

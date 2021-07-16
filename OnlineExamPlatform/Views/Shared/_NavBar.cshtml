@@ -1,0 +1,168 @@
+﻿<nav class="navbar header-navbar pcoded-header">
+    <div class="navbar-wrapper">
+        <div class="navbar-logo">
+            <a class="mobile-menu" id="mobile-collapse" href="#">
+                <i class="ti-menu"></i>
+            </a>
+           
+            <!--Sidebar Word online platform Exam-->
+            @if (User.IsInRole("admin"))
+            {
+                <a href="@Url.Action("Index","Admin")">
+                    <span class="website-text">Online</span> Exam platform
+                </a>
+            }
+            
+            @if (User.IsInRole("super admin"))
+            {
+                <a href="@Url.Action("Index","SuperAdmin")">
+                    <span class="website-text">Online</span> Exam platform
+                </a>
+            }
+            @if (User.IsInRole("examiner"))
+            {
+                <a href="@Url.Action("Index","Examiner")">
+                    <span class="website-text">Online</span> Exam platform
+                </a>
+            }
+            @if (User.IsInRole("proctor"))
+            {
+                <a href="@Url.Action("Index","Proctor")">
+                    <span class="website-text">Online</span> Exam platform
+                </a>
+            }
+            @if (User.IsInRole("student"))
+            {
+                <a href="@Url.Action("Index","Student")">
+                    <span class="website-text">Online</span> Exam platform
+                </a>
+            }
+          
+            <a class="mobile-options">
+                <i class="ti-more"></i>
+            </a>
+        </div>
+        <!--start of navbar-->
+        <div class="navbar-container container-fluid ">
+            <!--Toggle element on the sidebar-->
+            @*Logo Image*@
+            <ul class="nav-left">
+                <li>
+                    <div class="sidebar_toggle"><a href="javascript:void(0)"><i class="ti-menu"></i></a></div>
+                </li>
+                @if (User.IsInRole("admin"))
+                {
+                    <li> <a href="@Url.Action("Index","Admin")"><img src="~/images/logo.jpg" class="img-100  img-tabs" alt="Profile Logo" /></a> </li>
+
+                }
+                @if (User.IsInRole("super admin"))
+                {
+                    <li> <a href="@Url.Action("Index","SuperAdmin")"><img src="~/images/logo.jpg" class="img-100  img-tabs" alt="Profile Logo" /></a> </li>
+
+                }
+                @if (User.IsInRole("examiner"))
+                {
+                    <li> <a href="@Url.Action("Index","Examiner")"><img src="~/images/logo.jpg" class="img-100  img-tabs" alt="Profile Logo" /></a> </li>
+
+                }
+                @if (User.IsInRole("proctor"))
+                {
+                    <li> <a href="@Url.Action("Index","Proctor")"><img src="~/images/logo.jpg" class="img-100  img-tabs" alt="Profile Logo" /></a> </li>
+
+                }
+                @if (User.IsInRole("student"))
+                {
+                    <li> <a href="@Url.Action("Index","Student")"><img src="~/images/logo.jpg" class="img-100  img-tabs" alt="Profile Logo" /></a> </li>
+
+                }
+            </ul>
+            <!--Start of Element on the right navbar-->
+            <ul class="nav-right">
+                @if (User.IsInRole("admin"))
+                {
+                    <li><a href="@Url.Action("Index", "Admin")"><i class="ti-home"></i> Home</a></li>
+                    <li><a href="@Url.Action("StayTuned","UpComing")"><i class="ti-video-camera"></i> Tutorial</a></li>
+                    <li><a href="@Url.Action("StayTuned","UpComing")"><i class="ti-email"></i> Contact us</a></li>
+                    <li><a href="@Url.Action("StayTuned","UpComing")"><i class="ti-info-alt"></i> About us</a></li>
+                }
+                
+                @if (User.IsInRole("super admin"))
+                {
+                    <li><a href="@Url.Action("Index", "SuperAdmin")"><i class="ti-home"></i> Home</a></li>
+                    <li><a href="@Url.Action("StayTuned","UpComing")"><i class="ti-video-camera"></i> Tutorial</a></li>
+                    <li><a href="@Url.Action("StayTuned","UpComing")"><i class="ti-email"></i> Contact us</a></li>
+                    <li><a href="@Url.Action("StayTuned","UpComing")"><i class="ti-info-alt"></i> About us</a></li>
+                }
+                @if (User.IsInRole("examiner"))
+                {
+                    <li><a href="@Url.Action("Index", "Examiner")"><i class="ti-home"></i> Home</a></li>
+                    <li><a href="@Url.Action("StayTuned","UpComing")"><i class="ti-video-camera"></i> Tutorial</a></li>
+                    <li><a href="@Url.Action("StayTuned","UpComing")"><i class="ti-email"></i> Contact us</a></li>
+                    <li><a href="@Url.Action("StayTuned","UpComing")"><i class="ti-info-alt"></i> About us</a></li>
+                }
+                @if (User.IsInRole("proctor"))
+                {
+                    <li><a href="@Url.Action("Index", "Proctor")"><i class="ti-home"></i> Home</a></li>
+                    <li><a href="@Url.Action("StayTuned","UpComing")"><i class="ti-video-camera"></i> Tutorial</a></li>
+                    <li><a href="@Url.Action("StayTuned","UpComing")"><i class="ti-email"></i> Contact us</a></li>
+                    <li><a href="@Url.Action("StayTuned","UpComing")"><i class="ti-info-alt"></i> About us</a></li>
+                }
+                @if (User.IsInRole("student"))
+                {
+                    <li><a href="@Url.Action("Index", "Student")"><i class="ti-home"></i> Home</a></li>
+                    <li><a href="@Url.Action("StayTuned","UpComing")"><i class="ti-video-camera"></i> Tutorial</a></li>
+                    <li><a href="@Url.Action("StayTuned","UpComing")"><i class="ti-email"></i> Contact us</a></li>
+                    <li><a href="@Url.Action("StayTuned","UpComing")"><i class="ti-info-alt"></i> About us</a></li>
+                }
+                
+                <!--start of the user profile-->
+                <li class="user-profile header-notification">
+                    <a href="#">
+                        <img src="/images/img_avatar.png" class="" alt="User-Profile-Image">
+                        <i class="ti-angle-down"></i>
+                    </a>
+                    <ul class="show-notification profile-notification">
+                        <li>
+                            @if (User.IsInRole("admin"))
+                            {
+                                <a href="@Url.Action("Index", "AdminProfile")">
+                                    <i class="ti-settings"></i> Settings
+                                </a>
+
+                          
+
+                            }
+                            @if (User.IsInRole("examiner"))
+                            {
+                                <a href="@Url.Action("ExaminerProfile", "Examiner")">
+                                    <i class="ti-settings"></i> Settings
+                                </a>
+
+                            }
+                            @if (User.IsInRole("student"))
+                            {
+                                <a href="#">
+                                    <i class="ti-settings"></i> Settings
+                                </a>
+                            }
+                            @if (User.IsInRole("proctor"))
+                            {
+                                <a href="#">
+                                    <i class="ti-settings"></i> Settings
+                                </a>
+                            }
+                            
+                        </li>
+                        
+                      
+                        <li>
+                            <a href="@Url.Action("Logout", "Home")">
+                                <i class="ti-layout-sidebar-left"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

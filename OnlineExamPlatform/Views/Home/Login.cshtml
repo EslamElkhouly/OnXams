@@ -1,0 +1,57 @@
+﻿@model OnlineExamPlatform.ViewModels.UserLogedInViewModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "../Shared/_LoginLayout.cshtml";
+}
+
+<div class="login-card card-block auth-body mr-auto ml-auto ">
+
+
+    @using (@Html.BeginForm("Login", "Home"))
+    {
+
+        <div class="auth-box">
+
+            <div class="row m-b-20">
+                <div class="col-md-12">
+                    <h3 class="text-center txt-primary">Member Login</h3>
+                    <img src="~/images/img_avatar.png" class="img-100" alt="Avatar" />
+                </div>
+            </div>
+            <hr />
+            @Html.ValidationSummary()
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", placeholder = "Your Email Address", type = "Text" })
+                @Html.ValidationMessageFor(m => m.EmailAddress)
+                <span class="md-line"></span>
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Password, new { @class = "form-control", placeholder = "Password", type = "Password" })
+                @Html.ValidationMessageFor(m => m.Password)
+                <span class="md-line"></span>
+            </div>
+
+            <div class="row m-t-30">
+                <div class="col-md-12">
+                    @Html.AntiForgeryToken()
+                    <input type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20" value="Sign In" />
+
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <img src="~/images/logo.jpg" class=" img-100 img-logo" alt="OnXams Logo">
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- end of form -->
+</div>
+
+@*Client Side Validation*@
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval");
+}

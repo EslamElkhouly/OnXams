@@ -1,0 +1,255 @@
+﻿@model OnlineExamPlatform.ViewModels.NewQuestionViewModel
+@{
+    ViewBag.Title = "NewQuestion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    int optionAnswerTextBoxCounter = 0;
+}
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+
+                            @using (@Html.BeginForm("SaveNewQuestion", "Examiner"))
+                            {
+                                <div class="card">
+
+                                    <div class="card-header">
+                                        <span class="text-center">
+                                            New Question
+                                        </span>
+                                    </div>
+
+                                    <div class="card-block">
+
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.QuestionData.QuestionDescription)
+                                            @Html.TextAreaFor(m => m.QuestionData.QuestionDescription, new {@class="ckeditor" })
+                                            @Html.ValidationMessageFor(m => m.QuestionData.QuestionDescription)
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.CategoryId)
+                                            @Html.DropDownListFor(m => m.CategoryId
+                                                , new SelectList(Model.Category, "CategoryId", "CategoryName"),
+                                                "Select Category", new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.CategoryId)
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.SubCategoryId)
+                                            @Html.DropDownListFor(m => m.SubCategoryId
+                                                , new SelectList(Model.SubCategory, "SubCategoryId", "SubCategoryName"),
+                                                "Select Sub Category", new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.SubCategoryId)
+
+                                        </div>
+
+                                        <div class="form-group">
+
+                                            @Html.LabelFor(m => m.QuestionTypeId)
+                                            @Html.DropDownListFor(m => m.QuestionTypeId
+                                                , new SelectList(Model.QuestionType, "QuestionTypeId", "QuestionTypeName"),
+                                                "Select Question Type", new { @class = "form-control", @id = "QuestionTypeId" })
+                                            @Html.ValidationMessageFor(m => m.QuestionTypeId)
+
+
+                                        </div>
+
+                                        @*################################################################################################################################################################*@
+
+                                       <a href="javascript:void(0)" id="btnAddOption" class="ti-plus btn btn-success"> option</a>
+                                        <a href="javascript:void(0)" id="btnRemoveOption" aria-disabled="true" class="btn btn-danger ti-minus "> option</a>
+
+                                       
+
+                                        <div id="optionToBeAddedDynamically" class="optionsListAnswerForQuestion">
+
+                                            @if (@Model.OptionsOfMcqQuestion.Count != 0 || Model.OptionsOfMcqQuestion == null)
+                                            {
+
+                                                for (optionAnswerTextBoxCounter = 0; optionAnswerTextBoxCounter < Model.OptionsOfMcqQuestion.Count; optionAnswerTextBoxCounter++)
+                                                {
+
+                                                    <div class="form-group " id="optionListAddedDynamicallyDiv@(optionAnswerTextBoxCounter)">
+                                                        @Html.LabelFor(m => m.OptionsOfMcqQuestion[optionAnswerTextBoxCounter].OptionDescription)
+                                                        @Html.TextBoxFor(m => m.OptionsOfMcqQuestion[optionAnswerTextBoxCounter].OptionDescription, new { @class = "form-control txtOptionList" })
+                                                        @Html.HiddenFor(m => m.OptionsOfMcqQuestion[optionAnswerTextBoxCounter].OptionNumber)
+                                                        @Html.ValidationMessageFor(m => m.OptionsOfMcqQuestion[optionAnswerTextBoxCounter].OptionDescription)
+                                                    </div>
+                                                }
+                                                //optionAnswerTextBoxCounter++;
+
+                                            }
+                                        </div>
+                                        @*################################################################################################################################################################*@
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.QuestionWeightId)
+                                            @Html.DropDownListFor(m => m.QuestionWeightId
+                                                , new SelectList(Model.QuestionWeight, "QuestionWeightId", "QuestionWeightName"),
+                                                "Select Question Weight", new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.QuestionWeightId)
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.QuestionData.QuestionAnswer)
+                                            @Html.TextAreaFor(m => m.QuestionData.QuestionAnswer, new { @class = "form-control", placeholder = "Question Answer", id = "correctAnswer" })
+                                            @Html.ValidationMessageFor(m => m.QuestionData.QuestionAnswer)
+                                        </div>
+
+
+                                        
+                                        <div class="form-group">
+
+                                            @Html.LabelFor(m => m.AnswerTimeSpan)
+                                            @Html.TextBoxFor(m => m.AnswerTimeSpan
+                                           
+
+                                                , new
+                                                {
+                                                    @class = "form-control ",
+                                                    @placeholder = "Answer Time in Second",
+                                                    @type = "",
+                                                    id="answertimespanid"
+                                                })
+                                            @Html.ValidationMessageFor(m => m.AnswerTimeSpan)
+
+                                        </div>
+
+
+                                        <div class="form-group">
+
+                                            @Html.LabelFor(m => m.QuestionData.QuestionSource)
+                                            @Html.TextBoxFor(m => m.QuestionData.QuestionSource, new { @class = "form-control", placeholder = "Question Source" })
+                                            @Html.ValidationMessageFor(m => m.QuestionData.QuestionSource)
+
+                                        </div>
+
+
+
+
+
+
+
+
+
+                                    </div>
+                                </div>
+
+
+                                <div class="card">
+                                    <div class="card-block">
+
+                                        @Html.HiddenFor(m => m.QuestionData.QuestionDataGUID)
+                                        @Html.AntiForgeryToken()
+                                        @*@Html.HiddenFor(m=>m.CourseGuid);*@
+                                        @Html.HiddenFor(m => m.CourseGuid);
+                                        <button class="btn btn-primary" type="submit">Save Question Button</button>
+                                        @*@Html.ActionLink("Cancel", "Question", new { guid = Model.Guid }, new { @class = "pull-right btn btn-danger" })*@
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval");
+
+    <script>
+        $(document).ready(function () {
+            //////////////////////////////////////////////////////////
+            
+            var MCQ = "1";
+            var trueAndFalse = "2";
+            $("#btnAddOption").hide();
+            $("#btnRemoveOption").hide();
+
+            $(".optionsListAnswerForQuestion").hide();
+
+            getQuestionTypeToDisplayOptionTextBox();
+
+
+            function getQuestionTypeToDisplayOptionTextBox() {
+                $("#QuestionTypeId").on('click',
+                    function () {
+                        var type = $("#QuestionTypeId").val();
+
+                        if (type === MCQ || type === trueAndFalse) {
+                            $("#btnAddOption").show();
+                            $("#btnRemoveOption").show();
+
+                            $(".optionListAddedDynamically").show();
+
+                            $(".optionsListAnswerForQuestion").show();
+
+                        } else {
+                            $("#btnAddOption").hide();
+                            $("#btnRemoveOption").hide();
+                            $(".optionListAddedDynamically").hide();
+
+                            $(".optionsListAnswerForQuestion").hide();
+                            
+
+                            $(".txtOptionList").empty();
+                            $(".txtOptionList").prop('required',false);
+                        }
+                    });
+            }
+
+            $("#btnAddOption").on('click',
+                function () {
+                    addOption();
+                });
+
+            var  optionCounter=@optionAnswerTextBoxCounter;
+            function addOption() {
+                var row = '<div class="form-group optionListAddedDynamically" id="optionListAddedDynamicallyDiv' + optionCounter + '">' +
+                    '@Html.Label("Option Description")' +
+                    '<input type="text" class="form-control txtOptionList"  name="OptionsOfMcqQuestion[' + optionCounter + '].OptionDescription" id="OptionsOfMcqQuestion_' + optionCounter + '__OptionDescription" />' +
+                    '<input type="hidden" name="OptionsOfMcqQuestion[' + optionCounter++ + '].OptionNumber" id="OptionsOfMcqQuestion_'+ optionCounter +'__OptionNumber" value="'+ optionCounter +'"/>'+
+                    '</div>';
+
+                $("#optionToBeAddedDynamically").append(row);
+                
+
+            }
+
+            removeOption();
+            function removeOption() {
+                $("#btnRemoveOption").on('click',function () {
+                    var value = $("#optionToBeAddedDynamically div:last-child").attr("id");
+
+                    value = "#" + value;
+                    alert(value);
+                    $(value).remove();
+                    optionCounter--; // set the counter to its correct Value
+                    alert("Deleted");
+                });
+            }
+
+
+            /////////////////////////////////////////////////////
+
+        });
+
+    </script>
+}

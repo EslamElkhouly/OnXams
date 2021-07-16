@@ -1,0 +1,122 @@
+﻿@model OnlineExamPlatform.ViewModels.NewProctorViewModel
+@{
+    ViewBag.Title = "New Proctor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-block">
+
+                                    @using (@Html.BeginForm("SaveProctor", "AdminAddProctor"))
+                                    {
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.ProctorData.FirstName)
+                                            @Html.TextBoxFor(m => m.ProctorData.FirstName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.ProctorData.FirstName)
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.ProctorData.MiddleName)
+                                            @Html.TextBoxFor(m => m.ProctorData.MiddleName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.ProctorData.MiddleName)
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.ProctorData.LastName)
+                                            @Html.TextBoxFor(m => m.ProctorData.LastName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.ProctorData.LastName)
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.EmailAddress)
+                                            @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", type = "Email" })
+                                            @Html.ValidationMessageFor(m => m.EmailAddress)
+
+                                        </div>
+
+
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.Password)
+                                            @Html.TextBoxFor(m => m.Password, new { @class = "form-control", type = "password" })
+                                            @Html.ValidationMessageFor(m => m.Password)
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.ProctorData.GenderId)
+                                            @Html.DropDownListFor(m => m.ProctorData.GenderId,
+                                                new SelectList(Model.Gender, "GenderId", "GenderName"),
+                                                "Select Gender", new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.ProctorData.GenderId)
+
+                                        </div>
+
+
+
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.ProctorData.BirthDate)
+                                            @Html.TextBoxFor(m => m.ProctorData.BirthDate, "{0:yyyy-MM-dd}", new { type = "date", @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.ProctorData.BirthDate)
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.ProctorData.Job)
+                                            @Html.TextBoxFor(m => m.ProctorData.Job, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.ProctorData.Job)
+                                        </div>
+
+
+
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.ProctorData.PhoneNumber)
+                                            @Html.TextBoxFor(m => m.ProctorData.PhoneNumber, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.ProctorData.PhoneNumber)
+                                        </div>
+
+                                        @Html.HiddenFor(m => m.ProctorData.ProctorID)
+    @Html.Hidden("userEmailAddress", Model.EmailAddress)
+
+                                        @Html.HiddenFor(m => m.ProctorData.ProctorGUID)
+                                        @Html.HiddenFor(m => m.EmailAddress)
+                                        @Html.AntiForgeryToken()
+                                        <button class="btn btn-primary" type="submit">Save</button>
+                                        @Html.ActionLink("Cancel", "Index", "AdminAddProctor", new { @class = "pull-right btn btn-danger" })
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*Client Side Validation*@
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval");
+
+
+    <script>
+        $(document).ready(function () {
+
+
+
+        });
+    </script>
+
+}

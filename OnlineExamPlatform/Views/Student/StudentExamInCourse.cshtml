@@ -1,0 +1,117 @@
+﻿@using ClosedXML
+@model IEnumerable<OnlineExamPlatform.Models.ExamDetail>
+@{
+    ViewBag.Title = "StudentExamInCourse";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var counter = 0;
+}
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-block">
+
+
+                                    <div class="table-responsive">
+                                        <table id="examStudentTable" class="table table-bordered table-hover">
+                                            <caption>List of exams</caption>
+                                            <thead class="table-inverse">
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Exam Name / Exam Description</th>
+                                                    <th>Start Date / Start Time</th>
+                                                    <th>Duration</th>
+                                                    <th>Number of questions</th>
+                                                    <th>Marks Per Question</th>
+                                                    <th>Group Name</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            @foreach (var eDetails in Model.GroupBy(c => c.ExamID))
+                                            {
+                                                <tr>
+                                                    <td>@(++counter)</td>
+                                                    <td>@eDetails.First().ExamHeader.ExamName / @eDetails.First().ExamHeader.ExamDescription</td>
+                                                    <td>@eDetails.First().ExamHeader.StartDate.ToLongDateString() / @eDetails.First().ExamHeader.StartTime</td>
+                                                    <td>@eDetails.First().ExamHeader.Duration</td>
+                                                    <td>@eDetails.First().NumberOfQuestions Questions</td>
+                                                    <td>@eDetails.First().ExamHeader.MarksPerQuestion</td>
+                                                    <td>@eDetails.First().StudentGroup.GroupName</td>
+                                                    <td>
+                                                        @Html.ActionLink("Show Result", "ShowStudentResult", "Student", new { examHeaderGuid = @eDetails.First().ExamHeader.ExamGUID,examNumberOfQuestions=@eDetails.First().NumberOfQuestions }, new { @class = "btn btn-danger ", id = "btnGoToExam" })
+                                                    </td>
+
+
+                                                </tr>
+                                            }
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#examStudentTable").dataTable();
+            //enableButtonAccordingToCurrentDateTime();
+            //function enableButtonAccordingToCurrentDateTime() {
+            //    var dateTime = new Date();
+            //    var dd = dateTime.getDate();
+            //    console.log("dd = ", dd);
+            //    var mm = dateTime.getMonth() + 1;
+            //    console.log("mm = ", mm);
+            //    var yy = dateTime.getFullYear();
+            //    console.log("yy = ", yy);
+            //    var minutes = dateTime.getMinutes();
+            //    console.log("minutes = ", minutes);
+            //    var hours = dateTime.getHours();
+            //    console.log("hours = ", hours);
+
+            //}
+            //#####################################
+            @*function compareTwoDates() {
+                $("#btnGoToExam").attr("disabled", true);
+                $("#btnGoToExam").prop("disabled", true);
+                $("#btnGoToExam").hide();
+                var dateTime = new Date(@Model.StartDate.Value.Year, @Model.StartDate.Value.Month, @Model.StartDate.Value.Day, @Model.StartTime.Value.Hours, @Model.StartTime.Value.Minutes, @Model.StartTime.Value.Seconds);
+                var endDateTime = new Date(@Model.StartDate.Value.Year, @Model.StartDate.Value.Month, @Model.StartDate.Value.Day, @Model.StartTime.Value.Hours, @Model.EndTime.Minutes, @Model.EndTime.Seconds);
+                
+                console.log("endDateTime:" ,endDateTime);
+                var today = new Date();
+               
+                if (today===dateTime) {
+                    $("#btnGoToExam").show();
+                    $("#btnGoToExam").attr("disabled", false);
+                    $("#btnGoToExam").prop("disabled", false);
+                    $("#btnGoToExam").removeClass("btn-disabled");
+                    $("#btnGoToExam").removeClass("disabled");
+                }
+
+                if ((dateTime<today)&&(today<endDateTime)) {
+                    $("#btnGoToExam").show();
+                    $("#btnGoToExam").attr("disabled", false);
+                    $("#btnGoToExam").prop("disabled", false);
+                    $("#btnGoToExam").removeClass("btn-disabled");
+                    $("#btnGoToExam").removeClass("disabled");
+                }
+
+            }*@
+            //#####################################
+          
+        });
+    </script>
+}

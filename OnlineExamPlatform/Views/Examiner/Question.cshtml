@@ -1,0 +1,112 @@
+﻿
+@model IEnumerable<OnlineExamPlatform.Models.QuestionData>
+
+@{
+    ViewBag.Title = "Question";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var counter = 0;
+    
+}
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+
+                    <div class="row">
+                      
+                        <div class="col-12">
+
+                        
+
+
+
+                     
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="text-center">Questions</span>
+                            </div>
+
+                            <div class="card-block">
+
+                                <div class="table-responsive">
+                                   
+                                        <table id="questionTable" class="table table-striped table-condensed  table-hover">
+                                            <thead class="thead-inverse">
+                                            <tr>
+                                                <th>@Html.DisplayName("#")</th>
+                                                <th>@Html.DisplayName("Question")</th>
+                                                <th>@Html.DisplayName("Question Answer")</th>
+                                                <th>@Html.DisplayName("Answer Time")</th>
+                                                <th>@Html.DisplayName("Question Type")</th>
+                                                <th>@Html.DisplayName("Question Weight")</th>
+
+                                                <th>@Html.DisplayName("Question Source")</th>
+                                                <th>@Html.DisplayName("Category")</th>
+                                                <th>@Html.DisplayName("Sub Category")</th>
+                                                <th>@Html.DisplayName("Action ")</th>
+                                            </tr>
+                                            </thead>
+
+
+
+                                           
+                                            @foreach (var q in Model)
+                                            {
+                                                <tr class="">
+                                                    <td>@(++counter)</td>
+                                                    <td class="" style="width: 20px">
+                                                        @Html.Raw(q.QuestionDescription)
+                                                    </td>
+
+                                                    <td>@q.QuestionAnswer</td>
+
+                                                    <td>@q.AnswerTime</td>
+                                                    <td>@q.QuestionType.QuestionTypeName</td>
+                                                    <td>@q.QuestionWeight.QuestionWeightName</td>
+                                                            
+                                                    <td>@q.QuestionSource</td>
+                                                    <td>@q.Category.CategoryName</td>
+                                                    <td>@q.SubCategory.SubCategoryName</td>
+
+                                                    <td>
+                                                        @Html.ActionLink(" ", "DeleteQuestion", "Examiner", new { questionGuid = q.QuestionDataGUID, courseGuid = q.CourseData.CourseDataGUID }, new { @class = "ti-trash", style = "color:Red;", onclick = "return confirm('Are you Sure to Delete');" })
+                                                        @Html.ActionLink(" ", "EditQuestion", "Examiner", new { questionGuid = q.QuestionDataGUID,courseGuid=q.CourseData.CourseDataGUID }, new { @class = "ti-pencil-alt", style = "color:black;" })
+
+                                                    </td>
+                                                </tr>
+                                            }
+                                           
+                                        </table>
+
+
+                                 
+                                </div>
+                                    
+
+
+                            </div>
+
+                        </div>
+                        
+                        
+
+                    </div>
+
+
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+    </div>
+
+@section scripts
+{
+    <script>
+        $("#questionTable").dataTable();
+    </script>
+}

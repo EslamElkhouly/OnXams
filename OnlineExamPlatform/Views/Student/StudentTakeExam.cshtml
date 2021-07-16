@@ -1,0 +1,201 @@
+﻿@model OnlineExamPlatform.ViewModels.StudentTakeExamViewModel
+@{
+    ViewBag.Title = "StudentTakeExam";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var counter = 0;
+
+}
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="text-center">@Model.DepartmentName</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <tr>
+                                                        <td>Course Name :</td>
+                                                        <td>@Model.CourseName</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Course Code :</td>
+                                                        <td>@Model.CourseCode</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Grade :</td>
+                                                        <td>@Model.GradeYearName</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Date :</td>
+                                                        <td>@Model.StartDate.ToLongDateString()</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-6">
+
+
+                                            <div class="table-responsive">
+                                                <table class="table ">
+                                                    <tr>
+                                                        <td>Exam Name/Description :</td>
+                                                        <td>@Model.ExamName/@Model.ExamDescription</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Academic Year :</td>
+                                                        <td>@Model.AcademicYear</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Semester :</td>
+                                                        <td>@Model.Semester</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Duration :</td>
+                                                        <td>@Model.Duration Minutes</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @using (Html.BeginForm("SaveStudentAnswers", "Student", FormMethod.Post,new{id="formSubmit"}))
+                            {
+                                for (int i = 0; i < Model.QuestionData.Count; i++)
+                                {
+                                    if (Model.QuestionData[i].QuestionTypeId == 1 || Model.QuestionData[i].QuestionTypeId == 2)
+                                    {
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <span class="text-center">Question(@(++counter))</span>
+                                                    </div>
+
+                                                    <div class="card-block">
+
+                                                        <div class="form-group">
+                                                            @Html.HiddenFor(m => m.QuestionData[i].QuestionDataID)
+                                                            @Html.HiddenFor(m => m.QuestionData[i].QuestionTypeId)
+
+                                                            @Html.Raw(@Model.QuestionData[i].QuestionDescription)
+                                                            <hr />
+                                                            @foreach (var option in Model.QuestionData[i].OptionsOfMcqQuestions)
+                                                            {
+                                                                <div>
+                                                                    @Html.RadioButtonFor(m => m.QuestionData[i].SelectedAnswer, option.OptionsOfMcqQuestionsID, new { id = option.OptionsOfMcqQuestionsID })
+                                                                    <label for="@option.OptionsOfMcqQuestionsID">@option.OptionDescription</label>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                    else
+                                    {
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <span class="text-center">Question(@(++counter))</span>
+                                                    </div>
+
+                                                    <div class="card-block">
+
+                                                        <div class="form-group">
+                                                            @Html.HiddenFor(m => m.QuestionData[i].QuestionDataID)
+                                                            @Html.HiddenFor(m => m.QuestionData[i].QuestionTypeId)
+                                                            @Html.Raw(@Model.QuestionData[i].QuestionDescription)
+                                                            <hr />
+                                                            @Html.TextBoxFor(m => Model.QuestionData[i].StudentAnswerWrite, new { @class = "form-control", placeholder = "Your Answer Here" })
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+
+                                }
+
+
+
+                                @Html.HiddenFor(m => m.ExamHeaderId)
+                                <div class="card">
+                                    <div class="card-block">
+                                        <div class="row">
+                                            <div class="col-md-6 col-lg-6">
+                                                <div class="row">
+                                                    <span class="text-right text-underline font-weight-bold">
+                                                        @Model.ExaminerName
+                                                    </span>
+
+                                                </div>
+
+
+                                                <span class="badge badge-primary pull-right">Best Wishes</span>
+
+
+
+                                            </div>
+                                            <div class="col-md-6 col-lg-6">
+                                                <button id="btn-Submit" type="submit" class="btn btn-success btn-round pull-right" onclick="return confirm('are you sure to submit');">Submit Exam</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script>
+    $(document).ready(function () {
+        compareTwoDates();
+        function compareTwoDates() {
+            
+            var dateTime = new Date(@Model.StartDate.Year, @Model.StartDate.Month, @Model.StartDate.Day, @Model.EndTime.Hours, @Model.EndTime.Minutes, @Model.EndTime.Seconds);
+          
+
+            var today = new Date();
+            
+            if (today===dateTime) {
+                $("#formSubmit").submit();
+            }
+
+        }
+        });
+    </script>
+}

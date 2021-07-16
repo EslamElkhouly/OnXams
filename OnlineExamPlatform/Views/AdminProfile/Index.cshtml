@@ -1,0 +1,118 @@
+﻿@model OnlineExamPlatform.ViewModels.AdminViewModel
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+
+            <div class="page-wrapper">
+                <div class="page-body">
+
+
+
+
+                    @using (@Html.BeginForm("Index", "AdminProfile", FormMethod.Get))
+                    {<div class="row">
+                        <div class="col-md-12 col-xl-5">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-header-text"> Personal Information</div>
+                                </div>
+
+
+                                <div class="form-group text-center">
+                                    <a href="~/images/DefaultBoy.png">
+                                        <img src="~/images/DefaultBoy.png" class="image-profile" alt="Personal Image" />
+                                    </a>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-6 b-r-default">
+                                            @Html.Label("Email")
+                                        </div>
+                                        <div class="col-6 pull-right ">
+                                            <text class="font-weight-bold">@Model.UserAuthentication.Email</text>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-6 b-r-default">
+                                            @Html.Label("Job")
+                                        </div>
+                                        <div class="col-6 pull-right ">
+                                            <text class="font-weight-bold">@Model.AdminData.Job</text>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                         <div class="col-md-12 col-xl-5">
+                             <div class="card">
+                                 <div class="card-block">
+                                     <div class="row">
+                                         <div class="col-6 b-r-default">
+                                             @Html.Label("Full Name")
+                                         </div>
+                                         <div class="col-6 pull-right ">
+                                             <text class="font-weight-bold">@Model.AdminData.FirstName @Model.AdminData.MiddleName @Model.AdminData.LastName</text>
+                                         </div>
+                                     </div>
+
+
+                                     <div class="row">
+                                         <div class="col-6 b-r-default">
+                                             @Html.Label("Gender")
+                                         </div>
+                                         <div class="col-6 pull-right ">
+                                             <text class="font-weight-bold">@Model.AdminData.Gender.GenderName</text>
+                                         </div>
+                                     </div>
+
+
+                                     <div class="row">
+                                         <div class="col-6 b-r-default">
+                                             @Html.Label("Birth Date")
+                                         </div>
+                                         <div class="col-6 pull-right ">
+                                             <text type="date" class="font-weight-bold">@Model.AdminData.BirthDate</text>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+
+
+                             <div class="card">
+                                 <div class="card-block">
+                                     <div class="row">
+                                         <div class="col-6 b-r-default">
+                                             @Html.Label("Phone Number")
+                                         </div>
+                                         <div class="col-6 pull-right ">
+                                             <text class="font-weight-bold">@Model.AdminData.PhoneNumber</text>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="col-md-12 col-xl-2">
+                             @Html.ActionLink("Edit Profile","Edit","AdminProfile",new {guid=Model.AdminData.AdminGUID},new {@class="btn btn-primary btn-md btn-block "})
+                             @Html.ActionLink("Change Password","ChangePassword","AdminProfile",new {guid=Model.AdminData.AdminGUID},new {@class="btn btn-primary btn-md btn-block "})
+
+                         </div>
+
+                    </div>
+
+                    }
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

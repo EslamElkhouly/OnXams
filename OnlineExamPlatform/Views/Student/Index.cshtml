@@ -1,0 +1,257 @@
+﻿@model OnlineExamPlatform.ViewModels.StudentExamInformationViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    @using (@Html.BeginForm("Index", "Student", FormMethod.Get))
+                    {
+                        <div class="row">
+                            <div class="col-md-12 col-xl-7">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="card-header-text"> Personal Information</div>
+                                    </div>
+
+
+                                    <div class="form-group text-center">
+                                        <a href="~/images/DefaultBoy.png">
+                                            <img src="~/images/DefaultBoy.png" class="image-profile" alt="Personal Image" />
+                                        </a>
+                                    </div>
+
+                                    <div class="card-body">
+
+
+                                        <div class="row">
+                                            <div class="col-6 b-r-default">
+                                                @Html.Label("Full Name")
+                                            </div>
+                                            <div class="col-6 pull-right ">
+                                                <text class="font-weight-bold">@Model.FullName</text>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-6 b-r-default">
+                                                @Html.Label("Email")
+                                            </div>
+                                            <div class="col-6 pull-right ">
+                                                <text class="font-weight-bold">@Model.Email</text>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-6 b-r-default">
+                                                @Html.Label("Gender")
+                                            </div>
+                                            <div class="col-6 pull-right ">
+                                                <text class="font-weight-bold">@Model.Gender</text>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-6 b-r-default">
+                                                @Html.Label("Birth Date")
+                                            </div>
+                                            <div class="col-6 pull-right ">
+                                                <text type="Date" class="font-weight-bold">@Model.BirthDate.ToLongDateString()</text>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6 b-r-default">
+                                                @Html.Label("Phone Number")
+                                            </div>
+                                            <div class="col-6 pull-right ">
+                                                <text class="font-weight-bold">@Model.PhoneNumber</text>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-6 b-r-default">
+                                                @Html.Label("Department")
+                                            </div>
+                                            <div class="col-6 pull-right ">
+                                                <text class="font-weight-bold">@Model.Department</text>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6 b-r-default">
+                                                @Html.Label("Grade ")
+                                            </div>
+                                            <div class="col-6 pull-right ">
+                                                <text class="font-weight-bold">@Model.GradeYear</text>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                            @*Start of Exam Card*@
+                            <div class="col-md-12 col-xl-5">
+
+
+
+
+                                <div class="card fb-card">
+                                    <div class="card-header text-center">
+
+                                        <div class="d-inline-block ">
+                                            <h1>Next Exam</h1>
+                                            <span>@Model.CourseName</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-block">
+                                        <!--Text-center here-->
+                                        <div class="row ">
+
+
+
+
+                                            <div class="table-responsive ">
+                                                <table class="table table-striped ">
+                                                    <tr>
+                                                        <td>
+                                                            <label class="">
+                                                                Examiner Name
+                                                            </label>
+                                                        </td>
+                                                        <td><span class="font-weight-bold">@Model.ExaminerName</span></td>
+                                                    </tr>
+
+
+                                                    <tr>
+                                                        <td>
+                                                            <label>Exam Name</label>
+                                                        </td>
+                                                        <td><span class="font-weight-bold">@Model.ExamName</span></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <label>Start Date</label>
+                                                        </td>
+                                                        @if (@Model.StartDate.HasValue)
+                                                        {
+                                                            <td><span class="font-weight-bold">@Model.StartDate.Value.ToLongDateString()</span></td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>@Model.StartDate</td>
+                                                        }
+
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <label>Start Time</label>
+                                                        </td>
+                                                        @if (@Model.StartTime.HasValue)
+                                                        {
+                                                            <td><text class="time font-weight-bold">@Model.StartTime</text></td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>@Model.StartTime</td>
+                                                        }
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <label>Duration</label>
+                                                        </td>
+                                                        <td><span class="font-weight-bold">@Model.Duration</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <label>Group Name</label>
+                                                        </td>
+                                                        <td><span class="font-weight-bold">@Model.GroupName</span></td>
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td colspan="2">
+                                                            <span class="center">
+                                                                @Html.ActionLink("Go To Exam", "StudentTakeExam", "Student", new { examHeaderGuid = @Model.ExamHeaderGuid, studentGroupId = @Model.StudentGroupId }, new { @class = "btn btn-primary btn-block  ", id = "btnGoToExam" })
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                            </div>
+
+                            @*End Of The Exam Card*@
+                        </div>
+
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+    $(document).ready(function () {
+
+       @*compareTwoDates();
+        function compareTwoDates() {
+            $("#btnGoToExam").attr("disabled", true);
+            $("#btnGoToExam").prop("disabled", true);
+            $("#btnGoToExam").hide();
+            @{
+                var startDate = (bool)Model.StartDate.HasValue;
+            }
+            
+         
+           
+              var  dateTime = new Date(@Model.StartDate.Value.Year, @Model.StartDate.Value.Month, @Model.StartDate.Value.Day, @Model.StartTime.Value.Hours, @Model.StartTime.Value.Minutes, @Model.StartTime.Value.Seconds);
+               var endDateTime = new Date(@Model.StartDate.Value.Year, @Model.StartDate.Value.Month, @Model.StartDate.Value.Day, @Model.StartTime.Value.Hours, @Model.EndTime.Value.Minutes, @Model.EndTime.Value.Seconds);
+
+            console.log("endDateTime:", endDateTime);
+            var today = new Date();
+
+            if (today === dateTime) {
+                $("#btnGoToExam").show();
+                $("#btnGoToExam").attr("disabled", false);
+                $("#btnGoToExam").prop("disabled", false);
+                $("#btnGoToExam").removeClass("btn-disabled");
+                $("#btnGoToExam").removeClass("disabled");
+            }
+
+            if ((dateTime < today) && (today < endDateTime)) {
+                $("#btnGoToExam").show();
+                $("#btnGoToExam").attr("disabled", false);
+                $("#btnGoToExam").prop("disabled", false);
+                $("#btnGoToExam").removeClass("btn-disabled");
+                $("#btnGoToExam").removeClass("disabled");
+            }
+
+        }*@
+
+    });
+</script>
+}

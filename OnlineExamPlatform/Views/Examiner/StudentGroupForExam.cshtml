@@ -1,0 +1,302 @@
+﻿@model OnlineExamPlatform.ViewModels.StudentGroupViewModel
+@{
+    ViewBag.Title = "StudentGroup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var counter = 0;
+}
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-md-12 col-xl-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="text-center">
+                                        New Group
+                                    </span>
+                                </div>
+                                <div class="card-block">
+
+                                    @using (@Html.BeginForm("SaveStudentGroup", "Examiner", FormMethod.Post))
+                                    {
+                                        @Html.LabelFor(m => m.GroupName)
+                                        @Html.TextBoxFor(m => m.GroupName, new { @class = "form-control", placeholder = "Group Name", id = "groupNameTxtBoxId" })
+                                        @Html.ValidationMessageFor(m => m.GroupName)
+
+
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-condensed  table-hover">
+                                                @if (Model.StudentData.Any())
+                                                {
+                                                    <thead>
+                                                        <tr>
+                                                            <th>@Html.DisplayName("#")</th>
+                                                            <th>@Html.DisplayName("Student Name ")</th>
+                                                            <th>@Html.DisplayName("Success State")</th>
+
+                                                            <th>
+                                                                @Html.CheckBox("IsChecked", new { @class = "checkbox", @id = "SelectAllCheckboxes" })
+                                                                @Html.DisplayName("Select All")
+
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var e in @Model.StudentData)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    @(++counter)
+                                                                </td>
+                                                                <td>
+                                                                    @e.FirstName @e.MiddleName @e.LastName
+                                                                </td>
+                                                                @if ((bool)@e.IsPassed)
+                                                                {
+                                                                    <td>
+                                                                        <span class="badge badge-success">Passed</span>
+                                                                    </td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td>
+                                                                        <span class="badge badge-danger">Failed</span>
+                                                                    </td>
+                                                                }
+                                                                <td>
+                                                                    <input type="checkbox" name="AreChecked" value="@e.StudentID" class="checkbox checkBoxesStudents" />
+                                                                    @Html.DisplayName("Select Student")
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                }
+                                                else
+                                                {
+                                                    <p class="text-center">
+                                                        <strong>There are no records found!</strong>
+                                                    </p>
+                                                }
+                                            </table>
+                                        </div>
+
+                                        @Html.AntiForgeryToken()
+                                        @Html.HiddenFor(m => m.CourseGuid)
+                                        // @Html.HiddenFor(m => m.StudentGroupId)
+                                        <button type="submit" value="Submit" id="btnSubmit" class="btn btn-primary ">Save</button>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="row">
+                        <div class="col-md-12 col-xl-12">
+                            <div class="card">
+                                <div class="card-header">
+
+                                </div>
+                                <div class="card-block">
+                                    @using (@Html.BeginForm("DeleteStudentGroup", "Examiner"))
+                                    {
+                                        <div class="form-group">
+
+                                            <button id="btnDeleteStudentGroup" class="btn btn-danger">Delete Group</button>
+
+                                            @*@Html.ActionLink("EditGroup", "EditStudentGroup", "examiner"
+                                                  , new { }
+                                                ,new {@class="btn btn-primary" ,id="btnEditStudentGroup"})*@
+                                            @*<a href="@Url.Action("EditStudentGroup","Examiner",new {})" class="btn btn-primary pull-right " id="btnEditStudentGroup"> Edit Group</a>*@
+                                        </div>
+
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.StudentGroupId)
+                                            @Html.DropDownListFor(m => m.StudentGroupId,
+                                                new SelectList(@Model.StudentGroup, "StudentGroupID", "GroupName")
+                                                , "Select Group",
+                                                 new { @class = "form-control", @id = "StudentGroupID" })
+
+                                        </div>
+
+
+
+
+
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-condensed  table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>@Html.DisplayName("#")</th>
+                                                        <th>@Html.DisplayName("Full Name")</th>
+                                                        <th>@Html.DisplayName("Success State")</th>
+
+                                                    </tr>
+                                                </thead>
+
+
+                                                <tbody id="StudentGroup"></tbody>
+                                            </table>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+
+            enableSave();
+            function enableSave() {
+
+                if (@Model.StudentData.ToList().Count ===0) {
+                    $("#groupNameTxtBoxId").prop("readonly",true);
+                    $("#btnSubmit").hide();
+                    $("#btnSubmit").prop("disabled", disabled);
+                    $("#btnSubmit").attr("disabled", disabled);
+                    $("#btnSubmit").addClass('disabled');
+
+                } else {
+                    $("#btnSubmit").show();
+                }
+
+            }
+
+
+            selectAllCheckbox();
+            function selectAllCheckbox() {
+                $("#SelectAllCheckboxes").on("click", function () {
+                    $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
+                });
+
+
+                $('.checkbox').on('click', function () {
+                    if ($('.checkbox:checked').length === $('.checkbox').length) {
+                        $('#SelectAllCheckboxes').prop('checked', true);
+                    } else {
+                        $('#SelectAllCheckboxes').prop('checked', false);
+                    }
+                });
+            }
+            //#########################################################################
+
+
+
+
+
+            //1################################
+
+            $("#StudentGroupID").on('change', function() {
+
+                getStudentsByGroupId($("#StudentGroupID").val());
+            });
+
+
+            function getStudentsByGroupId(id) {
+                var url="/Examiner/GetStudentsByGroupId";
+                $.ajax({
+                    url:url,
+                    cache:false,
+                    data: {
+                        studentGroupId:id
+                    },
+                    type:"GET",
+                    success:function(data) {
+                        $("#StudentGroup").empty();
+                      
+                        $.each(data, function(i, item) {
+                            var state = "Passed";
+                            if (!item.IsPassed) {
+                                state = "Failed";
+                            }
+                            var rows = "<tr>" +
+                                "<td>" + (++i) + "</td>" +
+                                "<td>" + item.FirstName +" "+ item.MiddleName +" "+item.LastName +"</td>" +
+
+                                "<td>" + state + "</td>" +
+                                +"</tr>";
+                            $("#StudentGroup").append(rows);
+                        });
+                    },
+                    error:function(response) {
+                        alert('error' + response );
+                    }
+                });
+
+            }
+
+
+            //1################################
+
+
+
+
+            //2################################
+
+            $("#btnDeleteStudentGroup").on('click', function(e) {
+                var result=confirm("Are you sure to Delete");
+                if (result) {
+
+                    if ($("#StudentGroupID")[0].selectedIndex<=0) {
+                        alert("You must Select group first");
+                        e.preventDefault();
+                    } else {
+
+                    }
+
+                } else {
+                    alert("False");
+                }
+            });
+
+
+            //2################################
+
+
+
+            //3################################
+
+            //$("#btnEditStudentGroup").on('click', function(e) {
+            //    alert("Edit");
+            //    if ($("#StudentGroupID")[0].selectedIndex<=0) {
+                   
+            //        alert("You must Select group first");
+            //        e.preventDefault();
+            //    } else {
+                    
+            //    }
+            //});
+
+
+
+            //3################################
+
+
+        });
+    </script>
+}
+

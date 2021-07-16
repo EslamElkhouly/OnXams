@@ -1,0 +1,313 @@
+﻿@model OnlineExamPlatform.ViewModels.CourseTransactionViewModel
+@{
+    ViewBag.Title = "CourseTransactionForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+
+                            @using (@Html.BeginForm("SaveCourseTransaction", "CourseTransaction"))
+                            {
+                                <div class="card">
+                                    <div class="card-block">
+
+                                        <div class="form-group" id="departmentDiv">
+                                            @Html.LabelFor(m => m.DepartmentId)
+                                            @Html.DropDownListFor(m => m.DepartmentId
+                                                , new SelectList(Model.Department, "DepartmentId", "DepartmentName")
+                                                , " -- Select a Department --"
+                                                , new
+                                                {
+                                                    @class = "form-control"
+                                                    ,
+                                                    @id = "DepartmentId"
+
+                                                })
+                                            @Html.ValidationMessageFor(m => m.DepartmentId)
+                                        </div>
+
+
+                                        <div class="form-group" id="semesterDiv">
+
+                                            @Html.LabelFor(m => m.SemesterId)
+                                            @Html.DropDownListFor(m => m.SemesterId
+                                                , new SelectList(Model.Semester, "SemesterId", "SemesterName")
+                                                , " -- Select a Semester --"
+                                                , new { @class = "form-control", @id = "SemesterId" })
+                                            @Html.ValidationMessageFor(m => m.SemesterId)
+
+
+                                        </div>
+
+                                        <div class="form-group" id="gradeYearDiv">
+
+                                            @Html.LabelFor(m => m.GradeYearId)
+                                            @Html.DropDownListFor(m => m.GradeYearId
+                                                , new SelectList(Model.GradeYear, "GradeYearId", "GradeYearName")
+                                                , " -- Select a Grade Year --"
+                                                , new { @class = "form-control", @id = "GradeYearId" })
+                                            @Html.ValidationMessageFor(m => m.GradeYearId)
+
+
+                                        </div>
+                                        @{
+
+                                        }
+                                        <div class="form-group" id="courseDataDiv">
+                                            @Html.LabelFor(m => m.CourseDataId)
+                                            <select id="CourseDataId" name="CourseDataId" class="form-control"></select>
+                                            @Html.ValidationMessageFor(m => m.CourseDataId)
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            
+                                            @Html.LabelFor(m => m.ExaminerId)
+                                            @Html.DropDownListFor(m => m.ExaminerId,
+                                                new SelectList(Model.ExaminerData, "ExaminerId", "FullName"),
+                                                "-- Select Examiner --"
+                                                , new {@class = "form-control"})
+                                            @Html.ValidationMessageFor(m => m.ExaminerId)
+                                        </div>
+                                        
+                                   
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.AcademicYear)
+                                            @Html.TextBoxFor(m => m.AcademicYear, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                                            @Html.ValidationMessageFor(m => m.AcademicYear)
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-block">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-condensed  table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>@Html.DisplayName("#")</th>
+                                                        <th>@Html.DisplayName("Full Name")</th>
+                                                        <th>@Html.DisplayName("Success Status")</th>
+
+                                                    </tr>
+                                                </thead>
+
+
+                                                <tbody id="StudentTable"></tbody>
+                                            </table>
+                                        </div>
+                                        @Html.HiddenFor(c => c.CourseTransaction.CourseTransactionGUID)
+                                        @Html.AntiForgeryToken()
+                                        <button class="btn btn-primary" type="submit">Save</button>
+                                        @Html.ActionLink("Cancel", "Index", "CourseTransaction", new { @class = "pull-right btn btn-danger" })
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*Client Side Validation*@
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval");
+
+
+    <script>
+
+
+        $(document).ready(function () {
+            console.log($("#DepartmentId").val());
+
+
+            $("#semesterDiv").addClass("invisible");
+            $("#gradeYearDiv").addClass("invisible");
+            $("#courseDataDiv").addClass("invisible");
+
+            enableSemester();
+            enableGrade();
+            enableCourse();
+
+
+
+
+            getCourseById($("#DepartmentId").val(), $("#SemesterId").val(), $("#GradeYearId").val());
+          
+            getStudentByIds($("#DepartmentId").val(), $("#GradeYearId").val());
+
+
+            $("#GradeYearId,#DepartmentId,#SemesterId").on('change', function () {
+                getCourseById($("#DepartmentId").val(), $("#SemesterId").val(), $("#GradeYearId").val());
+                getStudentByIds($("#DepartmentId").val(), $("#GradeYearId").val());
+
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            function getCourseById(departmentIdd, semesterIdd, gradeIdd) {
+                var message = "<option value='0'> There are no available Courses...</option>";
+                $("#CourseDataId").html(message).show();
+                var url = "/CourseTransaction/GetCourseByIds";
+                $.ajax({
+                    url: url,
+                    cache: false,
+                    data: {
+                        departmentId: departmentIdd,
+                        semesterId: semesterIdd,
+                        gradeId: gradeIdd
+
+                    },
+                    type: "GET",
+                    success: function (data) {
+                        var markup = "<option value='0'>Select Course</option>";
+                        for (var x = 0; x < data.length; x++) {
+                            markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                            $("#CourseDataId").html(markup).show();
+                        }
+                        $("#CourseDataId").val(@Model.CourseDataId);
+                    }
+                    //,
+                    //error: function (response) {
+                    //    alert("error: " + response);
+                    //}
+                });
+            }
+
+
+
+
+            function getStudentByIds(departmentIdd, gradeIdd) {
+
+                var url = "/CourseTransaction/GetStudentByIds";
+
+                $.ajax({
+                    url: url,
+                    cache: false,
+                    data: {
+                        departmentId: departmentIdd,
+                        gradeId: gradeIdd
+                    },
+                    type: "GET",
+                    success: function (data) {
+                        $("#StudentTable").empty();
+                        $.each(data, function (i, item) {
+                            var state = "Passed";
+                            if (!item.IsPassed) {
+                                state = "Failed";
+                            }
+                            var rows = "<tr>" +
+                                "<td>" + (++i) + "</td>" +
+                                "<td>" + item.FirstName + " " + item.MiddleName + " " + item.LastName + "</td>" + 
+
+                                "<td> <span class=''>" + state + "</span></td>" +
+                                +"</tr>";
+                            $("#StudentTable").append(rows);
+                        });
+                    }
+                    //,
+                    //error:function(response) {
+                    //    alert('error ' + response);
+                    //}
+
+                });
+            }
+
+
+
+
+            function enableSemester() {
+                $("#DepartmentId").on('click',
+                    function () {
+
+                        if ($("#DepartmentId").val().length <= 0) {
+                            $("#semesterDiv").addClass("invisible");
+                            $("#gradeYearDiv").addClass("invisible");
+                            $("#courseDataDiv").addClass("invisible");
+                            $("#SemesterId").val("");
+                            $("#GradeYearId").val("");
+                            $("#CourseDataId").val("");
+                        } else {
+                            $("#semesterDiv").removeClass("invisible");
+
+                        }
+                    });
+            }
+
+
+            function enableGrade() {
+                $("#SemesterId").on('click',
+                    function () {
+
+                        if ($("#SemesterId").val().length <= 0) {
+
+                            $("#gradeYearDiv").addClass("invisible");
+                            $("#courseDataDiv").addClass("invisible");
+                            $("#GradeYearId").val("");
+                            $("#CourseDataId").val("");
+                        } else {
+
+                            $("#gradeYearDiv").removeClass("invisible");
+
+                        }
+                    });
+            }
+
+            function enableCourse() {
+                $("#GradeYearId").on('click',
+                    function () {
+
+                        if ($("#GradeYearId").val().length <= 0) {
+
+
+
+
+                            $("#courseDataDiv").addClass("invisible");
+                            $("#CourseDataId").val("");
+                        } else {
+
+                            $("#courseDataDiv").removeClass("invisible");
+
+                        }
+                    });
+            }
+
+
+
+        });
+
+
+    </script>
+}
+
+
+
+

@@ -1,0 +1,85 @@
+﻿@model OnlineExamPlatform.ViewModels.StudentCourseViewModel
+@{
+    ViewBag.Title = "Subject";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="row">
+
+                        <div class="col-md-12 col-xl-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="text-center">Subject Information</span>
+                                </div>
+
+                                <div class="card-block">
+                                    <div class=" table-responsive">
+                                        <table class="table table-striped table-condensed ">
+
+                                            <tr>
+                                                <td>@Html.LabelFor(m => m.CourseName)</td>
+                                                <td class="pull-right">@Model.CourseName</td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td>@Html.LabelFor(m => m.CourseCode)</td>
+                                                <td class="pull-right">@Model.CourseCode</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>@Html.LabelFor(m => m.Department)</td>
+                                                <td class="pull-right">@Model.Department</td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+                        </div>
+
+
+
+                        @*On the right*@
+                        <div class="col-md-12 col-xl-4">
+                      
+
+                            <!--Subject Exams-->
+                            <div class="card fb-card">
+
+                                <div class="d-inline-block ">
+                                    @Html.ActionLink("Subject Exams", "StudentExamInCourse", "Student"
+                                                 , new { courseGuid = @Model.CourseGuid }
+                                        , new { @class = "btn btn-primary btn-md btn-block text-center" })
+                                </div>
+
+                            </div>
+
+
+                            <!--Student Results-->
+                          
+
+
+                            <!--Analytics-->
+
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

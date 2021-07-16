@@ -1,0 +1,87 @@
+﻿@model OnlineExamPlatform.ViewModels.CourseDataViewModel
+@{
+    ViewBag.Title = "New Course";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-block">
+                                    @using (@Html.BeginForm("SaveCourse", "CourseData"))
+                                    {
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.CourseData.CourseName)
+                                            @Html.TextBoxFor(m => m.CourseData.CourseName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.CourseData.CourseName)
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.CourseData.CourseCode)
+                                            @Html.TextBoxFor(m => m.CourseData.CourseCode, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.CourseData.CourseCode)
+                                        </div>
+
+
+
+
+                                        <div class="form-group">
+                                                @Html.LabelFor(m=>m.CourseData.SemesterId)
+                                                @Html.DropDownListFor(m=>m.CourseData.SemesterId,new SelectList(Model.Semester,"SemesterId","SemesterName"),"Select Semester",new {@class="form-control"})
+                                               @Html.ValidationMessageFor(m=>m.CourseData.SemesterId)
+                                            </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.CourseData.DepartmentId)
+                                            @Html.DropDownListFor(m => m.CourseData.DepartmentId, new SelectList(Model.Department, "departmentId", "DepartmentName"), "Select Department", new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.CourseData.DepartmentId)
+                                        </div>
+
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.CourseData.GradeYearID)
+                                            @Html.DropDownListFor(m => m.CourseData.GradeYearID, new SelectList(Model.GradeYear, "GradeYearId", "GradeYearName"), "Select Grade", new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.CourseData.GradeYearID)
+                                        </div>
+
+
+
+
+                                        @Html.HiddenFor(m => m.CourseData.CourseDataGUID)
+                                        @Html.AntiForgeryToken()
+                                        <button class="btn btn-primary" type="submit">Save</button>
+                                        @Html.ActionLink("Cancel", "Index", "CourseData", new { @class = "pull-right btn btn-danger" })
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Client Side Validation*@
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval");
+
+    <script>
+
+        $(document).ready(function () {
+
+
+        });
+    </script>
+}
+
+

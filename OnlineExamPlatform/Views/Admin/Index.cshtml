@@ -1,0 +1,145 @@
+﻿@model OnlineExamPlatform.ViewModels.GetAdminStudentExaminerProctorCount
+
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+
+                    <!--#####################################################################################-->
+                    <div class="row">
+
+                        <!--First Card-->
+                        <div class="col-md-6 col-xl-4">
+                            <div class="card widget-card-1">
+                                <div class="card-block-small">
+                                    <i class="icofont icofont-pie-chart bg-c-blue card1-icon"></i>
+                                    <span class="text-c-blue f-w-600"></span>
+                                    @if (@Model.StudentData == 0)
+                                    {
+                                        <h6><strong>There are no Students</strong></h6>
+                                    }
+                                    else
+                                    {
+                                        <h4>@Model.StudentData</h4>
+                                        <div>
+                                            <span class="f-left m-t-10 text-muted">
+                                                <i class="text-c-blue f-16  m-r-10"></i>Number of Students
+                                            </span>
+                                        </div>
+                                    }
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--Second Card-->
+                        <div class="col-md-6 col-xl-4">
+                            <div class="card widget-card-1">
+                                <div class="card-block-small">
+                                    <i class="icofont icofont-pie-chart bg-c-blue card1-icon"></i>
+                                    <span class="text-c-blue f-w-600"></span>
+
+                                    @if (@Model.ExaminerData == 0)
+                                    {
+                                        <h6><strong>There are no Examiners</strong></h6>
+                                    }
+                                    else
+                                    {
+                                        <h4>@Model.ExaminerData</h4>
+                                        <div>
+                                            <span class="f-left m-t-10 text-muted">
+                                                <i class="text-c-blue f-16 icofont "></i>Number Of Examiners
+                                            </span>
+                                        </div>
+                                    }
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--Third Card-->
+                        <div class="col-md-6 col-xl-4">
+                            <div class="card widget-card-1">
+                                <div class="card-block-small">
+                                    <i class="icofont icofont-pie-chart bg-c-blue card1-icon"></i>
+                                    <span class="text-c-blue f-w-600"></span>
+                                    @if (@Model.AdminData == 0)
+                                    {
+                                        <h6><strong>There are no Admins</strong></h6>
+                                    }
+                                    else
+                                    {
+                                        <h4>@Model.AdminData</h4>
+                                        <div>
+                                            <span class="f-left m-t-10 text-muted">
+                                                <i class="text-c-blue f-16  m-r-10"></i>Number of Admins
+                                            </span>
+                                        </div>
+                                    }
+
+                                   
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Fourth Card-->
+                        <div class="col-md-6 col-xl-4">
+                            <div class="card widget-card-1">
+                                <div class="card-block-small">
+                                    <i class="icofont icofont-pie-chart bg-c-blue card1-icon"></i>
+                                    <span class="text-c-blue f-w-600"></span>
+                                    @if (@Model.ProctorData == 0)
+                                    {
+                                        <h6><strong>There are no Proctors</strong></h6>
+                                    }
+                                    else
+                                    {
+                                        <h4>@Model.ProctorData</h4>
+                                        <div>
+                                            <span class="f-left m-t-10 text-muted">
+                                                <i class="text-c-blue f-16  m-r-10"></i>Number of Proctors
+                                            </span>
+                                        </div>
+                                    }
+
+                                  
+                                </div>
+                            </div>
+                        </div>
+                        <!--FiFth Card-->
+                        <div class="col-md-6 col-xl-4">
+                            <div class="card widget-card-1">
+                                <div class="card-block-small">
+                                    <i class="icofont icofont-pie-chart bg-c-blue card1-icon"></i>
+                                    <span class="text-c-blue f-w-600"></span>
+                                    @if (@Model.LogData.Count() == 0)
+                                    {
+                                        <h6><strong>There are no Logs</strong> </h6>
+                                    }
+                                    else
+                                    {
+                                        <h4>@Model.LogData.Count()</h4>
+
+
+                                        <div>
+                                            <span class="f-left m-t-10 text-muted">
+                                                <i class="text-c-blue f-16  m-r-10"></i>Number of Logs
+                                            </span>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

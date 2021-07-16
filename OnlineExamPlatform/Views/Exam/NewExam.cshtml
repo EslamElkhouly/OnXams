@@ -1,0 +1,270 @@
+﻿@model OnlineExamPlatform.ViewModels.ExamProcessViewModel
+
+@{
+    ViewBag.Title = "NewExam";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var counter = 0;
+}
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <p>Exam</p>
+                        </div>
+                        <div class="card-block">
+                            @using (Html.BeginForm("SaveExam", "Exam"))
+                            {
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-12">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.ExamName, new { @class = "font-weight-bold" })
+                                            @Html.TextBoxFor(m => m.ExamName, new
+                                            {
+                                                @class = "form-control"
+                                                ,
+
+                                                placeholder = "Exam Name"
+                                            })
+                                            @Html.ValidationMessageFor(m => m.ExamName)
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.PaperDescription, new { @class = "font-weight-bold" })
+                                            @Html.TextAreaFor(m => m.PaperDescription, new
+                                            {
+                                                @class = "form-control",
+
+
+                                                placeholder = "Exam Description"
+                                            })
+                                            @Html.ValidationMessageFor(m => m.PaperDescription)
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.StartDate, new { @class = "font-weight-bold" })
+                                            @Html.TextBoxFor(m => m.StartDate, "{0:yyyy-MM-dd}", new
+                                            {
+                                                type="date",
+                                                @class = "form-control ",
+                                               
+                                                
+                                                
+                                            })
+                                            @Html.ValidationMessageFor(m => m.StartDate)
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.StartTime, new { @class = "font-weight-bold" })
+                                            @Html.TextBoxFor(m => m.StartTime, new { @class = "form-control", type = "time" })
+                                            @Html.ValidationMessageFor(m => m.StartTime)
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.Duration, new { @class = "font-weight-bold" })
+                                            @Html.TextBoxFor(m => m.Duration,
+                                                new
+                                                {
+                                                    @class = "form-control"
+                                                ,
+                                                    type = "Number"
+                                                ,
+                                                    placeholder = "Duration In Minutes"
+                                                    ,
+                                                    min = 1
+                                                })
+                                            @Html.ValidationMessageFor(m => m.Duration)
+                                        </div>
+
+
+
+
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.MarksPerQuestion, new { @class = "font-weight-bold" })
+                                            @Html.TextBoxFor(m => m.MarksPerQuestion, new
+                                            {
+                                                @class = "form-control"
+                                            ,
+
+                                                type = "Number"
+                                            ,
+                                                min = 1
+                                                ,
+
+                                                placeholder = "Marks Per Question"
+                                            })
+                                            @Html.ValidationMessageFor(m => m.MarksPerQuestion)
+                                        </div>
+
+                                        <div class="form-group">
+
+
+                                            <div class="checkbox">
+                                                <label>
+                                                    @Html.CheckBoxFor(m => m.IsExamActive, new
+                                                    {
+                                                        @class = "checkbox"
+                                                        ,
+                                                        data_on = "Active",
+                                                        data_off = "Inactive",
+                                                        data_toggle = "toggle",
+                                                        data_onstyle = "success",
+                                                        data_offstyle = "danger",
+                                                        @checked = "checked",
+                                                        data_width="100" ,
+                                                        data_height="50"
+                                                    })
+                                                    click to active?
+                                                </label>
+                                            </div>
+
+
+
+                                        </div>
+                                        <div class="form-group ">
+
+                                            <label class="font-weight-bold">Select Group</label>
+
+                                            <hr />
+                                            <div class="form-check">
+                                                @for (var i = 0; i < @Model.StudentGroup.Count(); i++)
+                                                {
+                                                    @Html.CheckBoxFor(m => m.StudentGroup[i].IsChecked,new {id="studentGroupCheckBox"})
+                                                    <label>@Model.StudentGroup[i].GroupName</label>
+                                                    @Html.HiddenFor(m => m.StudentGroup[i].StudentGroupID)
+
+                                                }
+                                            </div>
+                                        </div>
+                                        <hr />
+
+
+                                        <div class="table-responsive">
+                                            <table id="QuestionTable" class="table table-bordered table-hover">
+                                                <caption>List of questions</caption>
+                                                <thead class="thead-inverse">
+
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Question</th>
+                                                        <th>Question type</th>
+                                                        <th>Category/ Sub Category</th>
+                                                        <th>Question Weight</th>
+                                                        <th>Action</th>
+                                                    </tr>
+
+                                                </thead>
+                                                <tbody>
+                                                    @for (int i = 0; i < @Model.QuestionData.Count(); i++)
+                                                    {
+                                                        <tr>
+
+                                                            <td>@(++counter)</td>
+                                                            <td>@Html.Raw(Model.QuestionData[i].QuestionDescription)</td>
+                                                            <td>@Model.QuestionData[i].QuestionType.QuestionTypeName</td>
+                                                                <td>@Model.QuestionData[i].Category.CategoryName / @Model.QuestionData[i].SubCategory.SubCategoryName</td>
+                                                                <td>@Model.QuestionData[i].QuestionWeight.QuestionWeightName</td>
+                                                            <td>
+
+                                                                @Html.CheckBoxFor(m => m.QuestionData[i].IsChecked)
+                                                                @Html.DisplayName("Select Question")
+                                                                @Html.HiddenFor(m => m.QuestionData[i].QuestionDataID)
+
+
+                                                            </td>
+
+                                                        </tr>
+                                                    }
+                                                </tbody>
+
+
+                                            </table>
+
+
+                                        </div>
+
+                                        <hr />
+                                        @Html.AntiForgeryToken()
+                                        
+                                        @Html.HiddenFor(m => m.ExaminerId)
+                                        @Html.HiddenFor(m => m.ExamHeader.ExamGUID)
+                                        @Html.HiddenFor(m => m.ExamHeader.ExamId)
+                                        @Html.HiddenFor(m => m.CourseId)
+                                        <button type="submit" class="btn btn-info pull-right">Submit</button>
+                                    </div>
+
+
+
+
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval");
+    <script>
+
+        $(document).ready(function () {
+
+            $("#QuestionTable").dataTable({
+                "stateSave": true
+            });
+         
+            var valid = false;
+            var check = false;
+            $('form').on('submit', function(e) {
+                e.preventDefault();
+                valid = true;
+                valid=checkIfThereIsStudentGroupsOrQuestions();
+                if (valid) {
+                    check=checkIfThereStudentGroupsOrQuestionsChecked();
+                }
+                
+                if (valid&&check) {
+                    this.submit();
+                } 
+                        });
+            function checkIfThereIsStudentGroupsOrQuestions() 
+            {
+               
+                var studentGroupLength=@Model.StudentGroup.Count;
+                var questionLength=@Model.QuestionData.Count;
+                if (studentGroupLength===0 ||questionLength===0) {
+                    alert("you Must Create Groups or Questions First");
+                    
+                    return false;
+                   
+
+                }
+                return true;
+            }
+
+            function checkIfThereStudentGroupsOrQuestionsChecked() 
+            {
+                
+                var checked = $(" input[type=checkbox]:checked");
+                if (checked.length === 0) {
+                    alert("Plz select groups / Questions");
+                    return false;
+                }
+                return true;
+            }
+
+           
+
+        });
+    </script>
+}
+
+

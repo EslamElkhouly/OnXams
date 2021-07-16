@@ -1,0 +1,142 @@
+﻿@model IEnumerable<OnlineExamPlatform.Models.StudentData>
+
+@{
+    ViewBag.Title = "Student";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var counter = 0;
+}
+
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="row">
+                        <div class=" col-12">
+                            <div class="card">
+                                <div class="card-block">
+                                    @Html.ActionLink("Add Student", "NewStudent", "AdminAddStudent", new { @class = "btn btn-primary btn-block text-center" })
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="card">
+
+                                <div class="card-block">
+
+                                    <div class=" table-responsive">
+
+
+                                        <table id="studentTable" class="table table-striped table-condensed  table-hover">
+
+                                            <caption>List of Students</caption>
+                                            <thead class="thead-inverse">
+                                                <tr>
+                                                    <th>@Html.DisplayName("#")</th>
+                                                    <th>
+                                                        @Html.DisplayName("Full Name")
+                                                    </th>
+                                                    <th>@Html.DisplayName("Email")</th>
+                                                    <th>@Html.DisplayName("Gender")</th>
+                                                    <th>@Html.DisplayName("Department")</th>
+                                                    <th>@Html.DisplayName("Grade Year")</th>
+                                                    <th>@Html.DisplayName("Birth Date")</th>
+                                                    <th>@Html.DisplayName("Success Status")</th>
+                                                    <th>@Html.DisplayName("Phone Number")</th>
+                                                    <th>@Html.DisplayName("Action")</th>
+
+                                                </tr>
+                                            </thead>
+
+                                            @foreach (var e in Model)
+                                            {
+
+
+                                            <tr>
+                                                <td>@(++counter)</td>
+                                                <td>
+                                                    @Html.DisplayFor(m => e.FirstName)
+                                                    @Html.DisplayFor(m => e.MiddleName)
+                                                    @Html.DisplayFor(m => e.LastName)
+                                                </td>
+                                                <td>
+                                                    @foreach (var user in e.UserAuthentications)
+                                                        {
+                                                            if (user.StudentID == e.StudentID)
+                                                            {
+                                                        @user.Email
+                                                            }
+                                                        }
+                                                </td>
+
+
+
+                                                <td>@Html.DisplayFor(m => e.Gender.GenderName)</td>
+                                                <td>@Html.DisplayFor(m => e.Department.DepartmentName)</td>
+                                                <td>@Html.DisplayFor(m => e.GradeYear.GradeYearName)</td>
+                                                @{
+                                                    var date = e.BirthDate.Date.ToLongDateString();
+                                                }
+                                                <td>@Html.DisplayFor(m => date)</td>
+                                                @if ((bool)@e.IsPassed)
+                                                {
+                                                    <td ><span class="badge badge-success">Passed</span></td>
+                                                }
+                                                else
+                                                {
+                                                    <td ><span class="badge badge-danger">Failed</span></td>
+                                                }
+                                                <td>@Html.DisplayFor(m => e.PhoneNumber)</td>
+                                                <td>
+                                                    @Html.ActionLink(" ", "Delete", "AdminAddStudent", new { studentGuid = e.StudentGUID }, new { @class = "ti-trash", style = "color:Red;", onclick = "return confirm('Are you Sure to Delete');" })
+                                                    @Html.ActionLink(" ", "Edit", "AdminAddStudent", new { studentGuid = e.StudentGUID }, new { @class = "ti-pencil-alt", style = "color:black;" })
+                                                </td>
+                                            </tr>
+
+
+                                            }
+
+
+
+                                        </table>
+
+
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            $("#studentTable").dataTable();
+        });
+    </script>
+}

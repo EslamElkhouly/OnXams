@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>@ViewBag.Title -Online Exam Platform</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="Online Exam">
+    <meta name="keywords" content=" Exam , online Exam, Platfoem , Student, Admin,Examiner,doctor, Instructor, Proctor, iOS, Android, apple, Desktop,laptop">
+    @*Start Of css*@
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+
+    <div id="pcoded" class="pcoded">
+        <div class="pcoded-overlay-box"></div>
+        <div class="pcoded-container navbar-wrapper">
+            @Html.Partial("_Navbar")
+            <div class="pcoded-main-container">
+                <div class="pcoded-wrapper">
+                    @if (User.IsInRole("admin"))
+                    {
+                        @Html.Partial("sidebar/_SideBarAdmin")
+                    }
+                    
+                    @if (User.IsInRole("super admin"))
+                    {
+                        @Html.Partial("sidebar/_SideBarSuperAdmin")
+                    }
+                    @*19/4/2020*@
+                    @if (User.IsInRole("examiner"))
+                    {
+                        @Html.Action("SideBarExaminer","Examiner")
+                    }
+                    
+                    
+                    
+                    @if (User.IsInRole("student"))
+                    {
+                        @Html.Action("SideBarStudent", "Student")
+                    }
+                    
+                    
+
+                    @if (User.IsInRole("proctor"))
+                    {
+                        @Html.Partial("sidebar/_SideBarProctor")
+                    }
+                    
+                    
+
+                   
+                    @RenderBody()
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*Start Of Javascript*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/js")
+    @*to enable client side validation*@
+    @RenderSection("scripts", false);
+</body>
+</html>

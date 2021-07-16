@@ -1,0 +1,157 @@
+﻿
+@model OnlineExamPlatform.Models.ExamHeader
+@{
+    ViewBag.Title = "ExamSummary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var counter = 0;
+    var counter1 = 0;
+}
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="text-center">
+                                        Exam information
+                                    </span>
+                                </div>
+                                <div class="card-block">
+                                    @Html.Label("Course Name")
+                                    @Html.TextBoxFor(m => m.CourseData.CourseName, new { @class = "form-control disabled", @readonly = "true" })
+
+                                    @Html.Label("Course Code")
+                                    @Html.TextBoxFor(m => m.CourseData.CourseCode, new { @class = "form-control disabled", @readonly = "true" })
+
+                                    @Html.Label("Exam Name")
+                                    @Html.TextBoxFor(m => m.ExamName, new { @class = "form-control disabled", @readonly = "true" })
+
+                                    @Html.Label("Exam Description")
+                                    @Html.TextBoxFor(m => m.ExamDescription, new { @class = "form-control disabled", @readonly = "true" })
+
+                                    @Html.Label("Academic Year")
+                                    @Html.TextBoxFor(m => m.AcademicYear, new { @class = "form-control disabled", @readonly = "true" })
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span>Exam information</span>
+                                </div>
+                                <div class="card-block">
+                                    @{
+                                        var time = DateTime.Today.Add(@Model.StartTime);
+                                        var displayTime = time.ToString("h:mm tt ");
+                                    }
+                                    @Html.Label("Start Date")
+                                    @Html.TextBoxFor(m => m.StartDate, "{0:MM/dd/yyyy}", new { @class = "form-control disabled", @readonly = "true" })
+
+                                    @Html.Label("Start Time")
+                                    @Html.TextBoxFor(m=>m.StartTime, new { @class = "form-control disabled", @readonly = "true" ,type="time"})
+
+
+
+                                    @Html.Label("Duration (Minutes)")
+                                    @Html.TextBoxFor(m=>m.Duration, new { @class = "form-control disabled", @readonly = "true"})
+
+                                    @Html.Label("Marks per Question")
+                                    @Html.TextBoxFor(m=>m.MarksPerQuestion, new { @class = "form-control disabled", @readonly = "true"})
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span>Questions</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="table-responsive">
+                                        <table class="table table-condensed  table-hover">
+                                            <thead class="">
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Question</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var question in Model.ExamDetails.GroupBy(e => e.QuestionID))
+                                                {
+                                                    <tr>
+                                                        <td>@(++counter)</td>
+                                                        <td>
+                                                            @Html.Raw(@question.First().QuestionData.QuestionDescription)
+                                                        </td>
+                                                    </tr>
+
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        
+
+                        <div class="col-md-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span>Groups</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="table-responsive">
+                                        <table class="table table-condensed  table-hover">
+                                            <thead class="">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>group Name</th>
+                                                <th >Student Name</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach (var question in Model.ExamDetails.GroupBy(e => e.StudentGroupID))
+                                            {
+                                                <tr>
+                                                    <td>@(++counter1)</td>
+                                                    <td >@question.First().StudentGroup.GroupName</td>
+                                                    @foreach (var s in question.First().StudentGroup.StudentMapToGroups)
+                                                    {
+                                                        <td>
+                                                            @s.StudentData.FirstName @s.StudentData.MiddleName @s.StudentData.LastName
+                                                        </td>
+                                                    }
+                                                </tr>
+
+                                            }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

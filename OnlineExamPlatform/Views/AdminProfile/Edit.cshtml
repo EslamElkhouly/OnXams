@@ -1,0 +1,110 @@
+﻿@model OnlineExamPlatform.ViewModels.AdminViewModel
+@{
+    ViewBag.Title = "Edit Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-block">
+
+
+                                    @using (@Html.BeginForm("SaveAdmin", "Adminprofile", FormMethod.Post))
+                                    {
+                                        <div class="form-group">
+                                            image
+                                        </div>
+
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.AdminData.FirstName)
+                                            @Html.TextBoxFor(m => m.AdminData.FirstName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.AdminData.FirstName)
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.AdminData.MiddleName)
+                                            @Html.TextBoxFor(m => m.AdminData.MiddleName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.AdminData.MiddleName)
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.AdminData.LastName)
+                                            @Html.TextBoxFor(m => m.AdminData.LastName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.AdminData.LastName)
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.UserAuthentication.Email)
+                                            @Html.TextBoxFor(m => m.UserAuthentication.Email, new { @class = "form-control ", @readonly = "true" })
+                                            @Html.ValidationMessageFor(m => m.UserAuthentication.Email)
+                                        </div>
+
+                                        @*<div class="form-group">
+                                            @Html.LabelFor(m => m.UserAuthentication.Password)
+                                            @Html.TextBoxFor(m => m.UserAuthentication.Password, new { @type = "password", @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.UserAuthentication.Password)
+                                        </div>*@
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.AdminData.Job)
+                                            @Html.TextBoxFor(m => m.AdminData.Job, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.AdminData.Job)
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.AdminData.BirthDate)
+                                            @Html.TextBoxFor(m => m.AdminData.BirthDate, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.AdminData.BirthDate)
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.AdminData.GenderID)
+                                            @Html.DropDownListFor(m => m.AdminData.GenderID,
+                                                new SelectList(Model.Gender, "GenderId", "GenderName"),
+                                                "Select Gender",
+                                                new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m=>m.AdminData.GenderID)
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.AdminData.PhoneNumber)
+                                            @Html.TextBoxFor(m => m.AdminData.PhoneNumber, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.AdminData.PhoneNumber)
+                                        </div>
+
+
+                                        @Html.AntiForgeryToken()
+                                        @Html.HiddenFor(m => m.AdminData.AdminGUID)
+                                        <button class="btn btn-primary" type="submit"> Save </button>
+                                        @Html.ActionLink("Cancel", "Index", "AdminProfile", new { @class = "btn btn-danger pull-right" })
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*Client Side Validation*@
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval");
+}
+
+
+
+

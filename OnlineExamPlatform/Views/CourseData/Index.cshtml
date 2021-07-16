@@ -1,0 +1,115 @@
+﻿@model IEnumerable<OnlineExamPlatform.Models.CourseData>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var counter = 0;
+}
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                   
+                        <div class="row">
+                            <div class=" col-12">
+                        <div class="card">
+                            <div class="card-block">
+
+                                
+                                    @Html.ActionLink("New Course", "NewCourse", "CourseData", new { @class = "btn btn-primary text-center btn-block " })
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+
+
+
+                                <div class="card-block">
+
+                                    <div class="table-responsive">
+
+                                        <table id="courseTable" class="table table-striped table-condensed  table-hover">
+                                            <caption>List Of Courses</caption>
+                                            <thead class="thead-inverse">
+                                                <tr>
+                                                    <th> @Html.DisplayName("#")</th>
+                                                    <th>@Html.DisplayName("Full Name")</th>
+
+
+
+                                                    <th>@Html.DisplayName("Course Code")</th>
+                                                    <th>@Html.DisplayName("Semester")</th>
+                                                    <th>@Html.DisplayName("Department")</th>
+                                                    <th>@Html.DisplayName("Grade Year")</th>
+                                                    <th> @Html.DisplayName("Action")</th>
+                                                </tr>
+                                            </thead>
+
+                                            @foreach (var c in Model)
+                                            {
+                                                //Check semester here
+
+                                                <tr>
+                                                    <td>@(++counter)</td>
+                                                    <td>@Html.DisplayFor(m => c.CourseName)</td>
+                                                    <td>@Html.DisplayFor(m => c.CourseCode)</td>
+                                                    <td>@Html.DisplayFor(m => c.Semester.SemesterName)</td>
+                                                    <td>@Html.DisplayFor(m => c.Department.DepartmentName)</td>
+
+                                                    <td>@Html.DisplayFor(m => c.GradeYear.GradeYearName)</td>
+                                                    <td>
+                                                        @Html.ActionLink(" ", "Delete", "CourseData", new { Guid = c.CourseDataGUID }, new { @class = "ti-trash", style = "color:red;", onclick = "return confirm('Are you sure to delete?')" })
+                                                        @Html.ActionLink(" ", "Edit", "CourseData", new { Guid = c.CourseDataGUID }, new { @class = "ti-pencil-alt", style = "color:black;" })
+                                                    </td>
+
+                                                </tr>
+                                            }
+
+
+
+
+
+
+                                        </table>
+
+
+
+                                        
+
+
+
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                 
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#courseTable").dataTable();
+        });
+    </script>
+}

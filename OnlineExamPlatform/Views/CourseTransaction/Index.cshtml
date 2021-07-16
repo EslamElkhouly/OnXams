@@ -1,0 +1,120 @@
+﻿@model IEnumerable<OnlineExamPlatform.Models.CourseTransaction>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var counter = 0;
+}
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+
+            <div class="page-wrapper">
+                <div class="page-body">
+
+
+                    <div class="row">
+                        <div class=" col-12">
+                            <div class="card">
+                                <div class="card-block">
+
+                                    @Html.ActionLink("New Course Transaction","NewCourseTransaction","CourseTransaction",new {@class="btn btn-primary btn-block text-center"})
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+
+
+                        <div class="col-12">
+                            <div class="card">
+                                
+                                <!--Schedule Table-->
+                                <div class="card-block">
+
+                                    <div class=" table-responsive">
+                                       
+                                            <table id="courseTransactionTable" class="table table-striped table-condensed  table-hover">
+
+
+                                                <thead class="thead-inverse">
+                                                    <tr>
+                                                        <th>@Html.DisplayName("#")</th>
+                                                        <th>@Html.DisplayName("Course Name")</th>
+                                                       
+
+
+
+                                                        <th>@Html.DisplayName("Examiner Name")</th>
+                                                        <th>@Html.DisplayName("Academic Year")</th>
+                                                        <th>@Html.DisplayName("Number Of Students")</th>
+                                                        <th>@Html.DisplayName("Action")</th>
+
+                                                    </tr>
+                                                </thead>
+                                              
+                                                    @foreach (var c in Model)
+                                                    {
+
+
+                                                        <tr>
+                                                            <td>@(++counter)</td>
+                                                            <td>@Html.DisplayFor(m => c.CourseData.CourseName)</td>
+                                                            <td>
+                                                                @Html.DisplayFor(m => c.ExaminerData.FirstName)
+                                                                @Html.DisplayFor(m => c.ExaminerData.MiddleName)
+                                                                @Html.DisplayFor(m => c.ExaminerData.LastName)
+                                                            </td>
+            
+                                                            <td>
+                                                                @{
+                                                                    var date = c.AcademicYear.Date.Year + 1;
+                                                                }
+                                                                @Html.DisplayFor(m => c.AcademicYear.Date.Year) / @date
+                                                            </td>
+                                                            <td>@Html.DisplayFor(m => c.NumberOfStudents)</td>
+                                                            <td>
+
+                                                                @Html.ActionLink(" ", "Delete", "CourseTransaction", new { guid = c.CourseTransactionGUID }, new { @class = "ti-trash", style = "color:Red;", onclick = "return confirm('Are you Sure to Delete');" })
+                                                                @Html.ActionLink(" ", "Edit", "CourseTransaction", new { guid = c.CourseTransactionGUID }, new { @class = "ti-pencil-alt", style = "color:black;" })
+                                                            </td>
+                                                        </tr>
+                                                    }
+
+                                              
+
+                                            </table>
+
+                                        
+                                      
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#courseTransactionTable").dataTable();
+        });
+    </script>
+}
+
+

@@ -1,0 +1,261 @@
+﻿@model OnlineExamPlatform.ViewModels.ExamResultForEaminerViewModel
+@{
+    ViewBag.Title = "StudentResult";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-12">
+                    <div class="card">
+                       
+                                <div class="card-header">
+                                    <span>@Model.CourseName/@Model.CourseCode</span>
+                                </div>
+
+                        <div class="card-block">
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.ExamId)
+                                @Html.DropDownListFor(m => m.ExamId,
+                                    new SelectList(Model.ExamHeader, "ExamId", "ExamName"),
+                                    "Select Exam", new { @class = "form-control", id = "ExamId" })
+
+                            </div>
+
+                            <div class="form-group" id="btnPushResult">
+                                <button class="btn btn-primary" id="btnSendResultToStudent">Push Result</button>
+                            </div>
+                            
+
+                            <div id="examInfo" class="row">
+                                <div class="col-4">
+                                    <label>Number of Question : </label>
+                                    <text class="font-weight-bold" id="questionNumber"></text>
+                                </div>
+                                <div class="col-4">
+                                    <label>Marks per Question : </label>
+                                    <text class="font-weight-bold" id="questionMark"></text>
+                                </div>
+                                <div class="col-4">
+                                    <label>Finale Mark : </label>
+                                    <text class="font-weight-bold" id="finaleMark"></text>
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                        
+
+                    </div>
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+
+
+
+
+                    <div class="row" id="studentResultId">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span>Students Results</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead class="thead-inverse">
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Student Name</th>
+                                                    <th>Student Result</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody id="StudentTableResult"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            checkIfThereExams();
+            function checkIfThereExams() {
+                if (@Model.ExamHeader.ToList().Count===0) {
+                    alert("There are no exams in this course");
+                }
+            }
+          
+
+
+            //###########################
+            pushResultToStudents();
+            function pushResultToStudents() {
+                $("#btnSendResultToStudent").on('click', function() {
+                    updateResult($("#ExamId").val());
+                });
+            }
+
+            function updateResult(examHeaderId) {
+                var url = "/Exam/PushResultToStudents";
+                $.ajax({
+                    url: url,
+                    cache: false,
+                    data: {
+                        examId: examHeaderId
+
+                    },
+                    type: "POST",
+                    success: function (response) {
+                        if (response != null) {
+                            alert("Students' Results were published");
+                        } else {
+                            alert("Something went wrong");
+                        }
+
+                    }
+                    ,
+                    error: function (response) {
+                         alert("error",error);
+
+                    }
+
+                });
+            }
+
+
+
+
+
+
+
+
+
+            //#####################################
+
+               $("#studentResultId").hide();
+               $("#examInfo").hide();
+               $("#btnPushResult").hide();
+
+
+
+               getExamResult();
+
+            function getExamResult() {
+                $("#ExamId").on('change', function () {
+                    if ($("#ExamId").val()==="") {
+                        $("#studentResultId").hide();
+                        $("#examInfo").hide();
+                        $("#btnPushResult").hide();
+                    } else {
+                        getStudentResultByIds($("#ExamId").val());
+                        getExamInfo($("#ExamId").val());
+                    }
+
+                });
+            }
+
+
+
+
+            function getStudentResultByIds(examHeaderId) {
+
+                var url = "/Exam/GetStudentResult";
+                $.ajax({
+                    url: url,
+                    cache: false,
+                    data: {
+                        examId: examHeaderId
+
+                    },
+                    type: "GET",
+                    success: function (data) {
+                        $("#StudentTableResult").empty();
+                        $("#studentResultId").hide();
+                        if (!$.trim(data)) {
+                            $("#btnPushResult").hide();
+                        }
+                        $.each(data, function (i, item) {
+                            $("#studentResultId").show();
+                            $("#examInfo").show();
+                            $("#btnPushResult").show();
+
+                            var rows = "<tr>" +
+                                "<td>" + (++i) + "</td>" +
+                                "<td>" + item.sName + "</td>" +
+                                "<td>" + item.sResult + "</td>" +
+                                +"</tr>";
+
+                            $("#StudentTableResult").append(rows);
+                        });
+                    }
+                    ,
+                    error: function (response) {
+
+                    }
+
+                });
+            }
+
+
+
+            function getExamInfo(examHeaderId) {
+                var url = "/Exam/GetExamInfo";
+                $.ajax({
+                    url: url,
+                    cache: false,
+                    data: {
+                        examId: examHeaderId
+
+                    },
+                    type: "GET",
+                    success: function (data) {
+                        $("#questionNumber").empty();
+                        $("#questionMark").empty();
+                        $("#finaleMark").empty();
+
+                        $("#examInfo").show();
+                        $("#questionNumber").append(data.NumberOfQuestion);
+                        $("#questionMark").append(data.MarksPerQuestion);
+                        $("#finaleMark").append(data.FinaleMark);
+
+                    }
+                    ,
+                    error: function (response) {
+
+
+                    }
+
+                });
+            }
+
+
+
+               //###############################################
+
+
+        });
+    </script>
+}
+

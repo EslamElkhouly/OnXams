@@ -1,0 +1,122 @@
+﻿
+<nav class="pcoded-navbar">
+    <div class="sidebar_toggle"><a href="#"><i class="icon-close icons"></i></a></div>
+    <div class="pcoded-inner-navbar main-menu">
+        <!-- ########## Start SideBar Elements ########## -->
+        <div class="pcoded-navigatio-lavel" data-i18n="">Admin list</div>
+        <ul class="pcoded-item pcoded-left-item">
+            <li class="">
+                <a href="@Url.Action("Index","Admin")">
+                    <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
+                    <span class="pcoded-mtext">Analytics</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+            </li>
+            <!-- ########## Start 1st element ########## -->
+            <li class="pcoded-hasmenu">
+                <a href="javascript:void(0)">
+                    <span class="pcoded-micon"><i class="ti-user"></i></span>
+                    <span class="pcoded-mtext">Examiners</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+                <ul class="pcoded-submenu">
+                    <li class="">
+                        <a href="@Url.Action("Index","AdminAddExaminer")">Accounts</a>
+                    </li>
+
+                    <li class="#">
+                        <a href="@Url.Action("StayTuned","UpComing")">Permissions</a>
+                    </li>
+
+                    <li class=" ">
+                        <a href="@Url.Action("StayTuned","UpComing")">Reports</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- ########## End 1st element ########## -->
+            <!-- ########## Start 2nd element ########## -->
+            <li class="pcoded-hasmenu">
+                <a href="javascript:void(0)">
+                    <span class="pcoded-micon"><i class="ti-user"></i></span>
+                    <span class="pcoded-mtext">Students</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+                <ul class="pcoded-submenu">
+                    <li class=" ">
+                        <a href="@Url.Action("Index","AdminAddStudent")">Accounts</a>
+                    </li>
+
+                    <li class=" ">
+                        <a href="@Url.Action("StayTuned","UpComing")">Permissions</a>
+                    </li>
+
+                    <li class=" ">
+                        <a href="@Url.Action("StayTuned","UpComing")">Reports</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- ########## End 2nd element ########## -->
+            <!-- ########## Start 3rd element ########## -->
+            <li class="pcoded-hasmenu">
+                <a href="javascript:void(0)">
+                    <span class="pcoded-micon"><i class="ti-user"></i></span>
+                    <span class="pcoded-mtext">Proctors</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+                <ul class="pcoded-submenu">
+                    <li class=" ">
+                        <a href="@Url.Action("Index","AdminAddProctor")">Accounts</a>
+                    </li>
+
+                    <li class=" ">
+                        <a href="@Url.Action("StayTuned","UpComing")">Permissions</a>
+                    </li>
+
+                    <li class=" ">
+                        <a href="@Url.Action("StayTuned","UpComing")">Reports</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- ########## End 3rd element ########## -->
+            
+            
+            <!-- ########## Start 4nd element ########## -->
+            <li class="pcoded-hasmenu">
+                <a href="javascript:void(0)">
+                    <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
+                    <span class="pcoded-mtext">Courses</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+                <ul class="pcoded-submenu">
+                    <li class=" ">
+                        <a href="@Url.Action("Index","CourseData")">Course Data</a>
+                    </li>
+
+                    <li class=" ">
+                        <a href="@Url.Action("Index","CourseTransaction")">Course Transaction</a>
+                    </li>
+                   
+
+                </ul>
+            </li>
+            <!-- ########## End 4nd element ########## -->
+            <!-- ########## Start 5th element ########## -->
+            <li class="pcoded-hasmenu">
+                <a href="javascript:void(0)">
+                    <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
+                    <span class="pcoded-mtext">Exams</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+                <ul class="pcoded-submenu">
+                    <li class=" ">
+                        <a href="@Url.Action("TotalExamSchedulesForAdmin","Admin")">Schedule</a>
+                    </li>
+
+                   
+                </ul>
+            </li>
+            <!-- ########## End 5th element ########## -->
+        </ul>
+        <!-- ########## End SideBar Elements ########## -->
+    </div>
+</nav>

@@ -1,0 +1,110 @@
+﻿@model OnlineExamPlatform.ViewModels.NewExaminerViewModel
+@{
+    ViewBag.Title = "New Examiner";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-block">
+                                    @using (@Html.BeginForm("SaveExaminer", "AdminAddExaminer"))
+                                    {
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.ExaminerData.FirstName)
+                                            @Html.TextBoxFor(m => m.ExaminerData.FirstName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.ExaminerData.FirstName)
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.ExaminerData.MiddleName)
+                                            @Html.TextBoxFor(m => m.ExaminerData.MiddleName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.ExaminerData.MiddleName)
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.ExaminerData.LastName)
+                                            @Html.TextBoxFor(m => m.ExaminerData.LastName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.ExaminerData.LastName)
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.EmailAddress)
+                                            @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", type = "Email" })
+                                            @Html.ValidationMessageFor(m => m.EmailAddress)
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.Password)
+                                            @Html.TextBoxFor(m => m.Password, new { @class = "form-control", type = "password" })
+                                            @Html.ValidationMessageFor(m => m.Password)
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.ExaminerData.ScientificDegree)
+                                            @Html.TextBoxFor(m => m.ExaminerData.ScientificDegree, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.ExaminerData.ScientificDegree)
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.ExaminerData.BirthDate)
+                                            @Html.TextBoxFor(m => m.ExaminerData.BirthDate, "{0:yyyy-MM-dd}", new { type = "date", @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.ExaminerData.BirthDate)
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.ExaminerData.TeachingStartDate)
+                                            @Html.TextBoxFor(m => m.ExaminerData.TeachingStartDate, "{0:yyyy-MM-dd}", new { type = "date", @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.ExaminerData.TeachingStartDate)
+                                        </div>
+
+
+                                        <div class="form-group">
+
+                                            @Html.LabelFor(m => m.ExaminerData.GenderId)
+                                            @Html.DropDownListFor(m => m.ExaminerData.GenderId,
+                                                new SelectList(Model.Gender, "GenderId", "GenderName")
+                                                , "Select Gender",
+                                                new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.ExaminerData.GenderId)
+
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.ExaminerData.PhoneNumber)
+                                            @Html.TextBoxFor(m => m.ExaminerData.PhoneNumber, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.ExaminerData.PhoneNumber)
+                                        </div>
+
+                                        @Html.HiddenFor(m => m.ExaminerData.ExaminerID)
+                                        @Html.Hidden("userEmailAddress", Model.EmailAddress)
+
+                                        @Html.HiddenFor(m => m.ExaminerData.ExaminerGUID)
+                                        @Html.HiddenFor(m=>m.EmailAddress)
+                                        @Html.AntiForgeryToken()
+                                        <button class="btn btn-primary" type="submit">Save</button>
+                                        @Html.ActionLink("Cancel", "Index", "AdminAddExaminer", new { @class = "pull-right btn btn-danger" })
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*Client Side Validation*@
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval");
+}

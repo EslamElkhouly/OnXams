@@ -1,0 +1,84 @@
+﻿@model IEnumerable<OnlineExamPlatform.Models.ExamDetail>
+@{
+    ViewBag.Title = "Schedule";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var counter = 0;
+}
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-md-12 col-xl-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="text-center">Exam schedule</span> 
+                                </div>
+                                <!--Schedule Table-->
+                                <div class="card-block">
+
+                                    <div  class=" table-responsive">
+
+                                        <table id="examScheduleTable" class="table table-striped table-condensed  table-hover">
+                                            <thead class="thead-inverse">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Subject</th>
+                                                <th>Exam Name / Description</th>
+                                                <th>Academic year</th>
+                                                <th>Group / No.of students</th>
+                                                <th>Start Date / Start Time </th>
+                                                <th>Duration (in minutes)</th>
+                                                <th>State</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach (var exam in Model.GroupBy(c => new { c.StudentGroupID, c.ExamID }))
+                                            {
+                                                <tr>
+                                                    <td>@(++counter)</td>
+                                                    <td>@exam.First().ExamHeader.CourseData.CourseName</td>
+                                                    <td>@exam.First().ExamHeader.ExamName / @exam.First().ExamHeader.ExamDescription</td>
+                                                    <td>@exam.First().ExamHeader.AcademicYear</td>
+                                                    <td>@exam.First().StudentGroup.GroupName /@exam.First().StudentGroup.StudentMapToGroups.Count Students </td>
+                                                    @{
+                                                var datetime = DateTime.Today.Add(@exam.First().ExamHeader.StartTime);
+                                                        string displayTime = datetime.ToString("h:mm tt ");
+                                                    }
+                                                    <td>@exam.First().ExamHeader.StartDate.ToLongDateString() / @displayTime</td>
+                                                    <td>@exam.First().ExamHeader.Duration minutes</td>
+                              
+                                                    <td>@Html.ActionLink(" ", "ExamSummary", "Exam", new { examHeaderId = @exam.Key.ExamID }, new { @class = "ti-list" })</td>
+                                                </tr>
+                                            }
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            $("#examScheduleTable").dataTable();
+        });
+    </script>
+}

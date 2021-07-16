@@ -1,0 +1,129 @@
+﻿@model OnlineExamPlatform.ViewModels.StudentShowHisResult
+@{
+    ViewBag.Title = "ShowStudentResult";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span>@Model.ExamHeader.CourseData.CourseName/@Model.ExamHeader.CourseData.CourseCode</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                @Html.Label("Exam Name")
+                                                @Html.TextBoxFor(m => m.ExamHeader.ExamName, new { @class = "form-control",@readonly="true" })
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                @Html.Label("Exam Description")
+                                                @Html.TextBoxFor(m => m.ExamHeader.ExamDescription, new { @class = "form-control",@readonly="true" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                @Html.Label("Academic Year")
+                                                @Html.TextBoxFor(m => m.ExamHeader.AcademicYear, new { @class = "form-control", @readonly = "true" })
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    @{
+                        long result = 0;
+                        if (Model.ExaminationProcess!=null)
+                        {
+                            result = Model.ExaminationProcess.ExamHeader.MarksPerQuestion * Model.NumberOfQuestion;
+
+                        }
+                          }
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span>Student result</span>
+                                </div>
+                                <div class="card-block">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                            <tr id="trHead">
+                                                <td>Student Result</td>
+                                                <td>Finale Mark</td>
+                                            </tr>
+                                            </thead>
+                                            <tr id="studentSuccessStateId">
+                                                @if (Model.ExaminationProcess != null)
+                                                {
+                                                    <td>@Model.ExaminationProcess.StudentResult</td>
+                                                    <td>@result</td>
+                                                }
+                                                
+
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            if (@Model.ExaminationProcess !==null) {
+                   
+                var finaleMark=@Model.FinaleMark;
+                var studentResult=@Model.StudentResult;
+                checkStudentMark();
+                function checkStudentMark() {
+               
+                    if (studentResult<finaleMark/2) {
+                  
+                        $("#studentSuccessStateId").addClass("bg-danger");
+                        var failedHtml = "<td > Failed</td>";
+                        var failedHead = "<td > State</td>";
+                        $("#trHead").append(failedHead);
+                        $("#studentSuccessStateId").append(failedHtml);
+                    } else {
+                        $("#studentSuccessStateId").addClass("bg-success");
+                        var successHtml = "<td > Success</td>";
+                        var successHead = "<td > State</td>";
+                        $("#trHead").append(successHead);
+                        $("#studentSuccessStateId").append(successHtml);
+                    }
+               
+                
+                }
+            } else {
+                alert("No Result");
+            }
+         
+        });
+    </script>
+}

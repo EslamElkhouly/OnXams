@@ -1,0 +1,233 @@
+﻿@model OnlineExamPlatform.ViewModels.SubjectViewModel
+@{
+    ViewBag.Title = "Subject";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="row">
+
+                        <!--First Card-->
+                        <div class="col-md-6 col-xl-4">
+                            <div class="card widget-card-1">
+                                <div class="card-block-small">
+                                    <i class="icofont icofont-pie-chart bg-c-blue card1-icon"></i>
+                                    <span class="text-c-blue f-w-600"></span>
+                                    @if (@Model.StudentCount == 0)
+                                    {
+                                        <h6><strong>There are no Students</strong></h6>
+                                    }
+                                    else
+                                    {
+                                        <h4>@Model.StudentCount</h4>
+                                        <div>
+                                            <span class="f-left m-t-10 text-muted">
+                                                <i class="text-c-blue f-16  m-r-10"></i>Number of Students
+                                            </span>
+                                        </div>
+                                    }
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!--Second  Card-->
+                        <div class="col-md-6 col-xl-4">
+                            <div class="card widget-card-1">
+                                <div class="card-block-small">
+                                    <i class="icofont icofont-pie-chart bg-c-blue card1-icon"></i>
+                                    <span class="text-c-blue f-w-600"></span>
+                                    @if (@Model.ExamCount == 0)
+                                    {
+                                        <h6><strong>There are no Exams</strong></h6>
+                                    }
+                                    else
+                                    {
+                                        <h4>@Model.ExamCount</h4>
+                                        <div>
+                                            <span class="f-left m-t-10 text-muted">
+                                                <i class="text-c-blue f-16  m-r-10"></i>Number of Exams
+                                            </span>
+                                        </div>
+                                    }
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        @*Third Card*@
+                        <div class="col-md-6 col-xl-4">
+                            <div class="card widget-card-1">
+                                <div class="card-block-small">
+                                    <i class="icofont icofont-pie-chart bg-c-blue card1-icon"></i>
+                                    <span class="text-c-blue f-w-600"></span>
+                                    @if (@Model.QuestionsCount == 0)
+                                    {
+                                        <h6><strong>There are no Questions</strong></h6>
+                                    }
+                                    else
+                                    {
+                                        <h4>@Model.QuestionsCount</h4>
+                                        <div>
+                                            <span class="f-left m-t-10 text-muted">
+                                                <i class="text-c-blue f-16  m-r-10"></i>Number of Questions
+                                            </span>
+                                        </div>
+                                    }
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="row">
+
+                        <div class="col-md-12 col-xl-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="text-center">Subject Information</span>
+                                </div>
+
+                                <div class="card-block">
+                                    <div class=" table-responsive">
+                                        <table class="table table-striped table-condensed ">
+
+                                            <tr>
+                                                <td>@Html.LabelFor(m => m.CourseData.CourseName)</td>
+                                                <td class="pull-right">@Model.CourseData.CourseName</td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td>@Html.LabelFor(m => m.CourseData.CourseCode)</td>
+                                                <td class="pull-right">@Model.CourseData.CourseCode</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>@Html.LabelFor(m => m.CourseData.DepartmentId)</td>
+                                                <td class="pull-right">@Model.CourseData.Department.DepartmentName</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>@Html.LabelFor(m => m.CourseData.SemesterId)</td>
+                                                <td class="pull-right">@Model.CourseData.Semester.SemesterName</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>@Html.LabelFor(m => m.CourseData.GradeYearID)</td>
+                                                <td class="pull-right">@Model.CourseData.GradeYear.GradeYearName</td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+
+
+
+                        @*On the right*@
+                        <div class="col-md-12 col-xl-4">
+                            <!--Question Bank-->
+                            <div class="card fb-card">
+
+                                <div class="d-inline-block ">
+                                    @*<a href="#" class="btn btn-primary btn-md btn-block text-center">Question Bank</a>*@
+                                    @Html.ActionLink("Question Bank", "Question"
+                                        , new { courseGuid = @Model.CourseData.CourseDataGUID }
+                                                 , new { @class = "btn btn-primary btn-md btn-block text-center" })
+                                </div>
+
+
+                            </div>
+
+
+                            <!--Add New Question -->
+                            <div class="card fb-card">
+
+                                <div class="d-inline-block ">
+                                    @*<a href="#" class="btn btn-primary btn-md btn-block text-center">Question Bank</a>*@
+                                    @Html.ActionLink("Add New Question", "NewQuestion"
+                                        , new { guid = @Model.CourseData.CourseDataGUID }
+                                        , new { @class = "btn btn-primary btn-md btn-block text-center" })
+
+                                </div>
+
+                            </div>
+                            @*Student Groups*@
+                            <div class="card fb-card">
+
+                                <div class="d-inline-block ">
+
+                                    @Html.ActionLink("Student Group", "StudentGroupForExam", "Examiner"
+                                        , new { courseGuid = @Model.CourseData.CourseDataGUID }
+                                        , new { @class = "btn btn-primary btn-md btn-block text-center" })
+
+                                </div>
+
+                            </div>
+
+                            <!--Subject Exams-->
+                            <div class="card fb-card">
+
+                                <div class="d-inline-block ">
+                                    @Html.ActionLink("Subject Exams", "Index", "Exam"
+                                                 , new { courseGuid = @Model.CourseData.CourseDataGUID }
+                                        ,new {@class="btn btn-primary btn-md btn-block text-center"})
+
+                                </div>
+
+                            </div>
+
+
+                            <!--Student Results-->
+                            <div class="card fb-card">
+
+                                <div class="d-inline-block ">
+                                    @Html.ActionLink("Results ", "StudentResult", "Exam"
+                                        , new { courseGuid = @Model.CourseData.CourseDataGUID }
+                                        ,new {@class="btn btn-primary btn-md btn-block text-center"})
+
+
+                                </div>
+
+                            </div>
+
+
+                            <!--Analytics-->
+                            @*<div class="card fb-card">
+
+                                <<div class="d-inline-block ">
+                                    @Html.ActionLink("Analytics ", "Analytics", "Examiner"
+                                        , new { courseGuid = @Model.CourseData.CourseDataGUID }
+                                        , new { @class = "btn btn-primary btn-md btn-block text-center" })
+
+
+                                </div>
+
+                            </div>*@
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

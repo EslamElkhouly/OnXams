@@ -1,0 +1,125 @@
+﻿@model OnlineExamPlatform.ViewModels.ExaminerProfileViewModel
+@{
+    ViewBag.Title = "ExaminerProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+
+            <div class="page-wrapper">
+                <div class="page-body">
+
+
+
+
+                    @using (@Html.BeginForm("ExaminerProfile", "Examiner", FormMethod.Post))
+                    {<div class="row">
+                        <div class="col-md-12 col-xl-5">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-header-text"> Personal Information</div>
+                                </div>
+
+
+                                <div class="form-group text-center">
+                                    <a href="~/images/DefaultBoy.png">
+                                        <img src="~/images/DefaultBoy.png" class="image-profile" alt="Personal Image" />
+                                    </a>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-6 b-r-default">
+                                            @Html.Label("Email")
+                                        </div>
+                                        <div class="col-6 pull-right ">
+                                            <text class="font-weight-bold">@Model.UserAuthentication.Email</text>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-6 b-r-default">
+                                            @Html.Label("Job")
+                                        </div>
+                                        <div class="col-6 pull-right ">
+                                            <text class="font-weight-bold">@Model.ExaminerData.ScientificDegree</text>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12 col-xl-4">
+                            <div class="card">
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col-6 b-r-default">
+                                            @Html.Label("Full Name")
+                                        </div>
+                                        <div class="col-6 pull-right ">
+                                            <text class="font-weight-bold">@Model.ExaminerData.FirstName @Model.ExaminerData.MiddleName @Model.ExaminerData.LastName</text>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-6 b-r-default">
+                                            @Html.Label("Gender")
+                                        </div>
+                                        <div class="col-6 pull-right ">
+                                            <text class="font-weight-bold">@Model.ExaminerData.Gender.GenderName</text>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-6 b-r-default">
+                                            @Html.Label("Birth Date")
+                                        </div>
+                                        <div class="col-6 pull-right ">
+                                            @{
+                                                var date = @Model.ExaminerData.BirthDate.Value.ToLongDateString();
+                                            }
+                                            <text type="date" class="font-weight-bold date">@date</text>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="card">
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col-6 b-r-default">
+                                            @Html.Label("Phone Number")
+                                        </div>
+                                        <div class="col-6 pull-right ">
+                                            <text class="font-weight-bold">@Model.ExaminerData.PhoneNumber</text>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-xl-3">
+                            @Html.ActionLink("Change Password", "ChangePassword", "Examiner", new { guid = Model.ExaminerData.ExaminerGUID }, new { @class = "btn btn-primary btn-md btn-block " })
+                            @Html.ActionLink("Change Profile Picture", "ChangeProfilePicture", "Examiner", new { guid = Model.ExaminerData.ExaminerGUID }, new { @class = "btn btn-primary btn-md btn-block " })
+                        </div>
+
+                    </div>
+
+                    }
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+@*Start Of Modal*@

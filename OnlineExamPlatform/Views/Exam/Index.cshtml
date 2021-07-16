@@ -1,0 +1,91 @@
+﻿@model OnlineExamPlatform.ViewModels.ExamInformationViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var counter = 0;
+    var groupCount = 0;
+    var questionCount = 0;
+    var studentsCount = 0;
+}
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-block">
+                                    @Html.ActionLink("New Exam", "NewExam", "Exam"
+                                        , new { courseGuid = @Model.CourseGuid },
+                                        new { @class = "btn btn-primary btn-block text-center" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-block">
+                                    <div class="table-responsive">
+                                        <table id="examInformationTable" class="table table-bordered table-hover">
+                                            <caption> List of exams</caption>
+                                            <thead class="thead-inverse">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Exam Name / Description</th>
+                                                <th>NO. of Questions</th>
+                                                <th>Group Name / No. Of Students </th>
+                                                <th>Date / Time</th>
+                                                <th>Academic Year</th>
+                                                <th>Active </th>
+                                                <th>Action </th>
+                                            </tr>
+                                            </thead>
+                                            @foreach (var eDetail in Model.ExamDetail.GroupBy(c => new { c.StudentGroupID, c.ExamID }))
+                                       {
+                                        <tr>
+                                            <td>@(++counter)</td>
+                                            <td>@eDetail.First().ExamHeader.ExamName / @eDetail.First().ExamHeader.ExamDescription</td>
+                                            <td>@eDetail.First().NumberOfQuestions Question</td>
+                                            <td>@eDetail.First().StudentGroup.GroupName / @eDetail.First().StudentGroup.StudentMapToGroups.Count Students</td>
+                                            <td>@eDetail.First().ExamHeader.StartDate.ToLongDateString() / @eDetail.First().ExamHeader.StartTime</td>
+                                            <td>@eDetail.First().ExamHeader.AcademicYear</td>
+                                            @{
+                                           bool IsActive = (bool)eDetail.First().ExamHeader.IsActive;
+                                            }
+                                            @if (IsActive)
+                                            {
+                                                <td>@Html.ActionLink("Active", "ActiveDeActiveExamForGroup", "Exam", new { examHeaderId = @eDetail.Key.ExamID, studentGroupId = @eDetail.Key.StudentGroupID, courseGuid = Model.CourseGuid }, new { @class = "badge badge-success" })</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@Html.ActionLink("Inactive", "ActiveDeActiveExamForGroup", "Exam", new { examHeaderId = @eDetail.Key.ExamID, studentGroupId = @eDetail.Key.StudentGroupID, courseGuid = Model.CourseGuid }, new { @class = "badge badge-danger" })</td>
+                                            }
+                                            <td class="text-center">@Html.ActionLink(" ", "EditExamForGroup", "Exam", new { courseGuid = Model.CourseGuid, examHeaderId = @eDetail.Key.ExamID, studentGroupId = @eDetail.Key.StudentGroupID}, new { @class = "ti-pencil-alt", style = "color:blue;" })</td>
+                                        </tr>
+                                       }
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            $("#examInformationTable").dataTable();
+        });
+    </script>
+}
