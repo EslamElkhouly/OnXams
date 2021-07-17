@@ -9,7 +9,7 @@ namespace OnlineExamPlatform.Authentication
         {
             SmtpClient smtpClient = new SmtpClient();
             smtpClient.UseDefaultCredentials = false;
-            smtpClient.Credentials = new NetworkCredential("eslam2036@gmail.com", "eslamelkhouly300");
+            smtpClient.Credentials = new NetworkCredential("***********", "****************");
 
 
             MailMessage mailMessage = new MailMessage();
