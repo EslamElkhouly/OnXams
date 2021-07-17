@@ -13,7 +13,7 @@ namespace OnlineExamPlatform.Authentication
 
 
             MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress("eslam2036@gmail.com", "OnXams");
+            mailMessage.From = new MailAddress(""""""""""""""'", "OnXams");
             mailMessage.To.Add(sendTo);
             mailMessage.Subject =messageSubject;
             mailMessage.Body = messageBody;
