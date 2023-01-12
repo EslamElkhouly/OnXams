@@ -14,6 +14,7 @@ An MVC prject For Examination process (For CRUD Operation And Examination proces
 - View Students Results In Exams
 - authentication  
 - authorization (Role Based)
+- Responsive
 - Change password
 - Reset Password
 
